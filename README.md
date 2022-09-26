@@ -1,2 +1,1 @@
-# Dinoman<br><br>
-Dinoman is an application where user can bid for antique items or auction them.
+# Dinoman - Application for people to auction their antique items<br><br>
