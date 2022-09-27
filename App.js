@@ -1,24 +1,26 @@
-import {StyleSheet, Text, View} from 'react-native';
 import {StatusBar} from 'expo-status-bar';
+import {Keyboard, TouchableOpacity} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {MainProvider} from './contexts/MainContext';
+import Navigator from './navigators/Navigator';
 
 const App = () => {
   return (
     <>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-      <StatusBar style="auto"/>
+      <SafeAreaProvider>
+        <MainProvider>
+          <TouchableOpacity
+            onPress={() => Keyboard.dismiss()}
+            style={{flex: 1}}
+            activeOpacity={1}
+          >
+            <Navigator></Navigator>
+          </TouchableOpacity>
+        </MainProvider>
+      </SafeAreaProvider>
+      <StatusBar style="auto" />
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;
