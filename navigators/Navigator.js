@@ -10,6 +10,7 @@ import Profile from '../views/Profile';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import ModifyProfile from '../views/ModifyProfile';
+import Upload from '../views/Upload';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -45,6 +46,7 @@ const StackScreen = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
+          <Stack.Screen name="Upload" component={Upload} />
         </>
       ) : (
         <Stack.Screen

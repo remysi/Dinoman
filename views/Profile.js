@@ -63,6 +63,12 @@ const Profile = ({navigation}) => {
             navigation.navigate('ModifyProfile', user);
           }}
         />
+        <Button
+          title="Add item to auction"
+          onPress={() => {
+            navigation.navigate('Upload', user);
+          }}
+        />
       </Card>
     </>
   );
