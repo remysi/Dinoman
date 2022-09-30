@@ -6,7 +6,7 @@ import {useState} from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
-import {Alert} from 'react-native';
+import {Alert, ScrollView} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import {useContext} from 'react';
 import {applicationTag} from '../utils/variables';
@@ -48,7 +48,14 @@ const Upload = ({navigation}) => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('title', data.title);
-    formData.append('description', data.description);
+
+    const allItemData = {
+      description: data.description,
+      shortDescription: data.shortDescription,
+      age: data.age,
+    };
+    // formData.append('description', data.description);
+    formData.append('description', JSON.stringify(allItemData));
     const filename = mediaFile.split('/').pop();
     let extension = filename.split('.').pop();
     extension = extension === 'jpg' ? 'jpeg' : extension;
@@ -91,56 +98,86 @@ const Upload = ({navigation}) => {
   };
 
   return (
-    <Card>
-      <Card.Image source={{uri: mediaFile || 'https://placekitten.com/300'}} />
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-          minLength: 3,
-        }}
-        render={({field: {onChange, onBlur, value}}) => (
-          <Input
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="Title"
-            autoCapitalize="words"
-            errorMessage={
-              (errors.title?.type === 'required' && (
-                <Text>This is required.</Text>
-              )) ||
-              (errors.title?.type === 'minLength' && (
-                <Text>Min 3 characters.</Text>
-              ))
-            }
-          />
-        )}
-        name="title"
-      />
+    <ScrollView>
+      <Card>
+        <Card.Image
+          source={{uri: mediaFile || 'https://placekitten.com/300'}}
+        />
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+            minLength: 3,
+          }}
+          render={({field: {onChange, onBlur, value}}) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Title"
+              autoCapitalize="words"
+              errorMessage={
+                (errors.title?.type === 'required' && (
+                  <Text>This is required.</Text>
+                )) ||
+                (errors.title?.type === 'minLength' && (
+                  <Text>Min 3 characters.</Text>
+                ))
+              }
+            />
+          )}
+          name="title"
+        />
 
-      <Controller
-        control={control}
-        render={({field: {onChange, onBlur, value}}) => (
-          <Input
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="Description"
-          />
-        )}
-        name="description"
-      />
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Description"
+            />
+          )}
+          name="description"
+        />
 
-      <Button title="Select media" onPress={pickImage} />
-      <Button title="Reset" onPress={resetForm} />
-      <Button
-        title="Upload media"
-        disabled={!mediaFile}
-        loading={isLoading}
-        onPress={handleSubmit(onSubmit)}
-      />
-    </Card>
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Short Description"
+            />
+          )}
+          name="shortDescription"
+        />
+
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Age"
+            />
+          )}
+          name="age"
+        />
+
+        <Button title="Select media" onPress={pickImage} />
+        <Button title="Reset" onPress={resetForm} />
+        <Button
+          title="Upload media"
+          disabled={!mediaFile}
+          loading={isLoading}
+          onPress={handleSubmit(onSubmit)}
+        />
+      </Card>
+    </ScrollView>
   );
 };
 

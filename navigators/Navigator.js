@@ -11,11 +11,14 @@ import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import ModifyProfile from '../views/ModifyProfile';
 import Upload from '../views/Upload';
+import Single from '../views/Single';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const TabScreen = () => {
+  const {isLoggedIn} = useContext(MainContext);
+
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -23,17 +26,66 @@ const TabScreen = () => {
         component={Home}
         options={{tabBarIcon: ({color}) => <Icon name="home" color={color} />}}
       />
-      <Tab.Screen
-        name="Profile"
-        component={StackScreen}
-        options={{
-          tabBarIcon: ({color}) => <Icon name="account-circle" color={color} />,
-        }}
-      />
+      {isLoggedIn ? (
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarIcon: ({color}) => (
+              <Icon name="account-circle" color={color} />
+            ),
+          }}
+        />
+      ) : (
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{title: 'Dinoman'}}
+        />
+      )}
     </Tab.Navigator>
   );
 };
 
+const StackScreen = () => {
+  // const {isLoggedIn} = useContext(MainContext);
+  return (
+    <Stack.Navigator>
+      <>
+        <Stack.Screen
+          name="Back"
+          component={TabScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
+        <Stack.Screen name="Upload" component={Upload} />
+        <Stack.Screen name="Single" component={Single} />
+      </>
+    </Stack.Navigator>
+  );
+};
+
+/*
+const SingleScreen = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Single" component={Single} />
+    </Tab.Navigator>
+  );
+};
+*/
+
+const Navigator = () => {
+  return (
+    <NavigationContainer>
+      <StackScreen />
+    </NavigationContainer>
+  );
+};
+
+export default Navigator;
+
+/*
 const StackScreen = () => {
   const {isLoggedIn} = useContext(MainContext);
   return (
@@ -47,6 +99,7 @@ const StackScreen = () => {
           />
           <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
           <Stack.Screen name="Upload" component={Upload} />
+          <Stack.Screen name="Single" component={Single} />
         </>
       ) : (
         <Stack.Screen
@@ -57,14 +110,13 @@ const StackScreen = () => {
       )}
     </Stack.Navigator>
   );
-};
 
-const Navigator = () => {
+
+const SingleScreen = () => {
   return (
-    <NavigationContainer>
-      <TabScreen />
-    </NavigationContainer>
+    <>
+      <SingleScreen name="Single" component={Single} />
+    </>
   );
 };
-
-export default Navigator;
+*/
