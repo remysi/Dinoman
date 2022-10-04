@@ -10,6 +10,7 @@ import Profile from '../views/Profile';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import ModifyProfile from '../views/ModifyProfile';
+import Single from '../views/Single';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,6 +38,10 @@ const StackScreen = () => {
   const {isLoggedIn} = useContext(MainContext);
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name='Single'
+        component={Single}
+      />
       {isLoggedIn ? (
         <>
           <Stack.Screen
