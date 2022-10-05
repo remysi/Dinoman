@@ -20,7 +20,9 @@ const ListItem = ({singleMedia, navigation, myFilesOnly}) => {
   const {deleteMedia} = useMedia();
 
   const allItemData = JSON.parse(singleMedia.description);
-  const description1 = allItemData.age;
+  const itemAge = allItemData.age;
+  const itemCategory = allItemData.category;
+  const itemCondition = allItemData.condition;
 
   const doDelete = () => {
     Alert.alert('Deleting a file', 'Are you sure', [
@@ -52,7 +54,9 @@ const ListItem = ({singleMedia, navigation, myFilesOnly}) => {
           <Text>{singleMedia.title}</Text>
         </ReListItem.Title>
         <ReListItem.Subtitle>
-          <Text>{description1}</Text>
+          <Text>{itemAge}</Text>
+          <Text>{itemCategory}</Text>
+          <Text>{itemCondition}</Text>
         </ReListItem.Subtitle>
         {singleMedia.user_id === user.user_id && (
           <ButtonGroup

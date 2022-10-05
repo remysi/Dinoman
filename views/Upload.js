@@ -6,10 +6,15 @@ import {useState} from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
-import {Alert, ScrollView} from 'react-native';
+import {Alert, Platform, ScrollView} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import {useContext} from 'react';
 import {applicationTag} from '../utils/variables';
+import SelectDropdown from 'react-native-select-dropdown';
+// import RNDateTimePicker from '@react-native-community/datetimepicker';
+// import DateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+// import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 const Upload = ({navigation}) => {
   const [mediaFile, setMediaFile] = useState(null);
@@ -18,6 +23,48 @@ const Upload = ({navigation}) => {
   const {postMedia} = useMedia();
   const {postTag} = useTag();
   const {update, setUpdate} = useContext(MainContext);
+  const [item, setItem] = useState({});
+  // For date/time selection
+  const [date, setDate] = useState(new Date());
+  const [dateText, setDateText] = useState('Empty');
+  const [mode, setMode] = useState('date');
+
+  // Show Clock
+  const [showClock, setShowClock] = useState(false);
+
+  // Date OnChange
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowClock(Platform.OS === 'android');
+    setDate(currentDate);
+
+    const tempDate = new Date(currentDate);
+    const selectedAuctionDate =
+      tempDate.getFullYear() +
+      '-' +
+      (tempDate.getMonth() + 1) +
+      '-' +
+      tempDate.getDate();
+    const selectedAuctionTime =
+      tempDate.getHours() + ':' + tempDate.getMinutes() + ':' + '00';
+    setDateText(selectedAuctionDate + '\n' + selectedAuctionTime);
+
+    console.log(
+      'Selected date',
+      selectedAuctionDate,
+      'Selected time',
+      selectedAuctionTime
+    );
+    setItem((item) => {
+      return {
+        ...item,
+        auctionTimer: selectedAuctionDate + ' ' + selectedAuctionTime,
+      };
+    });
+  };
+
+  // DateTimePickerAndroid.open(params: AndroidNativeProps)
+  // DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
 
   const {
     control,
@@ -53,6 +100,11 @@ const Upload = ({navigation}) => {
       description: data.description,
       shortDescription: data.shortDescription,
       age: data.age,
+      condition: item.condition,
+      category: item.category,
+      auctionTimer: item.auctionTimer,
+      auctionPrice: data.startPrice,
+      // auctionDate: date.auctionDate,
     };
     // formData.append('description', data.description);
     formData.append('description', JSON.stringify(allItemData));
@@ -64,6 +116,7 @@ const Upload = ({navigation}) => {
       name: filename,
       type: mediaType + '/' + extension,
     });
+    console.log('data', allItemData);
     setIsLoading(true);
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -97,6 +150,27 @@ const Upload = ({navigation}) => {
     setValue('description', '');
   };
 
+  const itemCondition = ['Perfect', 'Great', 'Good', 'Fair', 'Broken'];
+
+  const itemCategory = ['Clock', 'Weapon', 'Furniture', 'Art', 'Rome'];
+
+  // Show clock
+  const showClockMode = (currentMode) => {
+    setShowClock(true);
+    setMode(currentMode);
+  };
+  /*
+  const hiddenClock = () => {
+    let hiddenClockValue;
+    if (!hiddenClockValue) {
+      !hiddenClockValue;
+      console.log(hiddenClockValue);
+    }
+  };
+  */
+
+  // setDate = (event, date) => {};
+  console.log(item);
   return (
     <ScrollView>
       <Card>
@@ -128,7 +202,6 @@ const Upload = ({navigation}) => {
           )}
           name="title"
         />
-
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -141,7 +214,6 @@ const Upload = ({navigation}) => {
           )}
           name="description"
         />
-
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -154,7 +226,6 @@ const Upload = ({navigation}) => {
           )}
           name="shortDescription"
         />
-
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -168,6 +239,83 @@ const Upload = ({navigation}) => {
           name="age"
         />
 
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Starting Price"
+            />
+          )}
+          name="startPrice"
+        />
+
+        <Button
+          title="Set Auction date"
+          onPress={() => showClockMode('date')}
+        />
+        <Button
+          title="Set Auction time"
+          onPress={() => showClockMode('time')}
+        />
+
+        {showClock && (
+          <RNDateTimePicker
+            value={date}
+            is24Hour={true}
+            mode={mode}
+            display="default"
+            onChange={onChangeDate}
+            name="auctionTimer"
+          />
+        )}
+
+        <Text>{dateText}</Text>
+        <>
+          <SelectDropdown
+            data={itemCondition}
+            defaultButtonText="Select condition"
+            onSelect={(selectedItem, index) => {
+              console.log(selectedItem, index);
+              // value = selectedItem;
+              console.log(selectedItem);
+              setItem((item) => {
+                return {...item, condition: selectedItem};
+              });
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem;
+            }}
+            rowTextForSelection={(item, index) => {
+              return item;
+            }}
+            getSelectedValue={(selectedItem, value) => {
+              value = selectedItem;
+              console.log(value);
+              return value;
+            }}
+          />
+        </>
+
+        <SelectDropdown
+          data={itemCategory}
+          defaultButtonText="Select category"
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+            setItem((item) => {
+              return {...item, category: selectedItem};
+            });
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          name="category"
+        />
         <Button title="Select media" onPress={pickImage} />
         <Button title="Reset" onPress={resetForm} />
         <Button
