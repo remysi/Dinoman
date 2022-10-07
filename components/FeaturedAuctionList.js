@@ -3,7 +3,7 @@ import {useMedia} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
-import AuctionItem from './AuctionItem';
+import FeaturedAuctionItem from './FeaturedAuctionItem';
 
 const FeaturedAuctionList = ({navigation}) => {
   //const {update} = useContext(MainContext);
@@ -15,7 +15,7 @@ const FeaturedAuctionList = ({navigation}) => {
       data={mediaArray.slice(0,5)}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => (
-        <AuctionItem
+        <FeaturedAuctionItem
           singleMedia={item}
           navigation={navigation}
         />
