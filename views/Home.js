@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {Platform, SafeAreaView} from 'react-native';
-import AuctionList from '../components/AuctionList';
+import AuctionList from '../components/FeaturedAuctionList';
 import styleSheet from 'react-native-web/src/exports/StyleSheet';
 
 // Navigation in the home function if there is problems with nav
