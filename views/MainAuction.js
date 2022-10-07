@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {Platform, SafeAreaView} from 'react-native';
-import FeaturedAuctionList from '../components/FeaturedAuctionList';
+import AuctionList from '../components/FeaturedAuctionList';
 import styleSheet from 'react-native-web/src/exports/StyleSheet';
 
 // Navigation in the home function if there is problems with nav
@@ -8,7 +8,7 @@ const Home = (props) => {
   const {navigation} = props;
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
-      <FeaturedAuctionList navigation={navigation} />
+      <AuctionList navigation={navigation} />
     </SafeAreaView>
   );
 };
