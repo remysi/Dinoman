@@ -12,6 +12,7 @@ import {MainContext} from '../contexts/MainContext';
 import ModifyProfile from '../views/ModifyProfile';
 import Upload from '../views/Upload';
 import Single from '../views/Single';
+import SellerProfile from '../views/SellerProfile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -60,6 +61,7 @@ const StackScreen = () => {
         <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
         <Stack.Screen name="Upload" component={Upload} />
         <Stack.Screen name="Single" component={Single} />
+        <Stack.Screen name="SellerProfile" component={SellerProfile} />
       </>
     </Stack.Navigator>
   );
