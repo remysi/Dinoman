@@ -38,33 +38,43 @@ const Profile = ({navigation}) => {
   };
 
   return (
-    <>
-      <Card>
-        <Card.Title>Full name: {user.full_name}</Card.Title>
-        <Card.Image source={{uri: avatar}} />
-        <ListItem>
-          <Avatar
-            icon={{name: 'contact-mail', type: 'material'}}
-            containerStyle={{backgroundColor: 'darkred'}}
-          />
-          <Text> {user.email}</Text>
-        </ListItem>
-        <ListItem>
-          <Icon name="person" />
-          <Text>
-            User: {user.username} (id: {user.user_id})
-          </Text>
-        </ListItem>
-        <Button title="Logout" onPress={logOut} />
-
-        <Button
-          title="Update"
-          onPress={() => {
-            navigation.navigate('ModifyProfile', user);
-          }}
+    <Card>
+      <Card.Title>Full name: {user.full_name}</Card.Title>
+      <Card.Image source={{uri: avatar}} />
+      <ListItem>
+        <Avatar
+          icon={{name: 'contact-mail', type: 'material'}}
+          containerStyle={{backgroundColor: 'darkred'}}
         />
-      </Card>
-    </>
+        <Text> {user.email}</Text>
+      </ListItem>
+      <ListItem>
+        <Icon name="person" />
+        <Text>
+          User: {user.username} (id: {user.user_id})
+        </Text>
+      </ListItem>
+      <Button title="Logout" onPress={logOut} />
+
+      <Button
+        title="Update"
+        onPress={() => {
+          navigation.navigate('ModifyProfile', user);
+        }}
+      />
+      <Button
+        title="Add item to auction"
+        onPress={() => {
+          navigation.navigate('Upload', user);
+        }}
+      />
+      <Button
+        title="Bid History"
+        onPress={() => {
+          navigation.navigate('BidHistory', user);
+        }}
+      />
+    </Card>
   );
 };
 

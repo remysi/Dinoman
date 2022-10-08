@@ -17,7 +17,7 @@ const Home = (props) => {
       </Card>
 
       <Card>
-      <FeaturedAuctionList navigation={navigation} />
+        <FeaturedAuctionList navigation={navigation} />
       </Card>
     </SafeAreaView>
   );

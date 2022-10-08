@@ -11,13 +11,19 @@ import Profile from '../views/Profile';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import ModifyProfile from '../views/ModifyProfile';
-import Single from '../views/Single';
 import MainAuction from '../views/MainAuction';
+import Upload from '../views/Upload';
+import Single from '../views/Single';
+import SellerProfile from '../views/SellerProfile';
+import BidHistory from '../views/BidHistory';
+import BuyItem from '../views/BuyItem';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const TabScreen = () => {
+  const {isLoggedIn} = useContext(MainContext);
+
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -46,40 +52,21 @@ const TabScreen = () => {
           headerTitleAlign: 'center',
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={StackScreen}
-        options={{
-          tabBarIcon: ({color}) =>
-            <Icon
-              name="account-circle"
-              size={30}
-              color={color}
-            />,
-          headerTitleAlign: 'center',
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
-
-const StackScreen = () => {
-  const {isLoggedIn} = useContext(MainContext);
-  return (
-    <Stack.Navigator>
-{/*      <Stack.Screen
-        name='Single'
-        component={Single}
-      />*/}
       {isLoggedIn ? (
-        <>
-          <Stack.Screen
-            name="Back"
-            component={Profile}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
-        </>
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarIcon: ({color}) => (
+              <Icon
+                name="account-circle"
+                size={30}
+                color={color}
+              />
+            ),
+            headerTitleAlign: 'center',
+          }}
+        />
       ) : (
         <Stack.Screen
           name="Login"
@@ -87,14 +74,45 @@ const StackScreen = () => {
           options={{title: 'Dinoman'}}
         />
       )}
+    </Tab.Navigator>
+  );
+};
+
+const StackScreen = () => {
+  // const {isLoggedIn} = useContext(MainContext);
+  return (
+    <Stack.Navigator>
+      <>
+        <Stack.Screen
+          name="Back"
+          component={TabScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
+        <Stack.Screen name="Upload" component={Upload} />
+        <Stack.Screen name="Single" component={Single} />
+        <Stack.Screen name="SellerProfile" component={SellerProfile} />
+        <Stack.Screen name="BidHistory" component={BidHistory} />
+        <Stack.Screen name="BuyItem" component={BuyItem} />
+      </>
     </Stack.Navigator>
   );
 };
 
+/*
+const SingleScreen = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Single" component={Single} />
+    </Tab.Navigator>
+  );
+};
+*/
+
 const Navigator = () => {
   return (
     <NavigationContainer>
-      <TabScreen />
+      <StackScreen />
     </NavigationContainer>
   );
 };

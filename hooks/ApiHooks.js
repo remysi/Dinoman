@@ -193,4 +193,24 @@ const useTag = () => {
   return {getFilesByTag, postTag};
 };
 
-export {useMedia, useUser, useLogin, useTag};
+const useComment = () => {
+  const postBid = async (token, biddedAmount) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+      body: JSON.stringify(biddedAmount),
+    };
+    try {
+      return await doFetch(apiUrl + 'comments', options);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {postBid};
+};
+
+export {useMedia, useUser, useLogin, useTag, useComment};
