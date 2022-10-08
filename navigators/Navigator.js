@@ -13,6 +13,9 @@ import ModifyProfile from '../views/ModifyProfile';
 import Upload from '../views/Upload';
 import Single from '../views/Single';
 import SellerProfile from '../views/SellerProfile';
+import BidHistory from '../views/BidHistory';
+import BuyItem from '../views/BuyItem';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -62,6 +65,8 @@ const StackScreen = () => {
         <Stack.Screen name="Upload" component={Upload} />
         <Stack.Screen name="Single" component={Single} />
         <Stack.Screen name="SellerProfile" component={SellerProfile} />
+        <Stack.Screen name="BidHistory" component={BidHistory} />
+        <Stack.Screen name="BuyItem" component={BuyItem} />
       </>
     </Stack.Navigator>
   );

@@ -68,6 +68,12 @@ const Profile = ({navigation}) => {
           navigation.navigate('Upload', user);
         }}
       />
+      <Button
+        title="Bid History"
+        onPress={() => {
+          navigation.navigate('BidHistory', user);
+        }}
+      />
     </Card>
   );
 };
