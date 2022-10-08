@@ -21,7 +21,7 @@ const TabScreen = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Featured"
+        name="Dinoman"
         component={Home}
         options={{
           tabBarIcon: ({color}) =>
@@ -29,7 +29,8 @@ const TabScreen = () => {
               name="home"
               size={30}
               color={color}
-            />
+            />,
+          headerTitleAlign: 'center',
         }}
       />
       <Tab.Screen
@@ -41,7 +42,8 @@ const TabScreen = () => {
               name="shop"
               size={30}
               color={color}
-            />
+            />,
+          headerTitleAlign: 'center',
         }}
       />
       <Tab.Screen
@@ -53,7 +55,8 @@ const TabScreen = () => {
               name="account-circle"
               size={30}
               color={color}
-            />
+            />,
+          headerTitleAlign: 'center',
         }}
       />
     </Tab.Navigator>

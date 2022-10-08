@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import FeaturedAuctionItem from './FeaturedAuctionItem';
+import {Card} from '@rneui/themed';
 
 const FeaturedAuctionList = ({navigation}) => {
   //const {update} = useContext(MainContext);
@@ -15,6 +16,7 @@ const FeaturedAuctionList = ({navigation}) => {
       data={mediaArray.slice(0,5)}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => (
+
         <FeaturedAuctionItem
           singleMedia={item}
           navigation={navigation}
