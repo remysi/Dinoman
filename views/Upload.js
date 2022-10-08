@@ -124,7 +124,17 @@ const Upload = ({navigation}) => {
       console.log('upload response', uploadResponse);
       const tag = {file_id: uploadResponse.file_id, tag: applicationTag};
       const tagResponse = await postTag(token, tag);
-      console.log('onSubmit postTag', tagResponse);
+      const tagCategory = {
+        file_id: uploadResponse.file_id,
+        tag: applicationTag + '' + item.category,
+      };
+      const tagCategoryResponse = await postTag(token, tagCategory);
+      console.log(
+        'onSubmit postTag',
+        tagResponse,
+        'CategoryTag',
+        tagCategoryResponse
+      );
 
       Alert.alert(uploadResponse.message, '', [
         {
