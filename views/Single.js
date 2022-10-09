@@ -31,16 +31,17 @@ const Single = ({navigation, route, sellerInfo}) => {
   const [videoRef, setVideoRef] = useState(null);
   const [avatar, setAvatar] = useState('https://placekitten.com/160');
   const [username, setUserName] = useState(null);
-  const {getFilesByTag} = useTag();
+  const {getFilesByTag, postTag} = useTag();
   const {getUserById} = useUser();
   // For bidding
   // const {update, setUpdate} = useContext(MainContext);
 
-  const {postBid} = useComment();
+  const {postBid, getCommentByFile} = useComment();
   const {
     control,
     handleSubmit,
-    // formState: {errors},
+    getValues,
+    formState: {errors},
   } = useForm({
     defaultValues: {file_id: file_id, comment: ''},
     // mode: 'onBlur', file_id: file_id,
@@ -54,16 +55,6 @@ const Single = ({navigation, route, sellerInfo}) => {
       const bidResult = await postBid(token, biddedAmount);
       console.log('bid successfull', bidResult);
       /*
-      const tagBidded = {
-        file_id: bidResult.file_id,
-        tag: applicationTag,
-      };
-      const tagBiddedResponse = await postTag(token, tagBidded);
-      console.log('onBid tagBidded', tagBiddedResponse);
-      console.log('Bidding result', bidResult);
-      */
-
-      /*
       Alert.alert(bidResult.message, '', [
         {
           text: 'Ok',
@@ -75,6 +66,22 @@ const Single = ({navigation, route, sellerInfo}) => {
       */
     } catch (error) {
       console.error('Biddingform  error', error);
+    }
+  };
+
+  // const allBids = JSON.parse(comment);
+  // const oneBid = allBids.comment;
+  // console.log('bidd?', oneBid);
+
+  const getHighestBid = async () => {
+    try {
+      const bid = await getCommentByFile(file_id);
+      const whatBid = bid.pop();
+      setHighestBid(whatBid.comment);
+      console.log('What is the bid', whatBid);
+      return whatBid;
+    } catch (error) {
+      console.error('getHighestbid error', error);
     }
   };
 
@@ -94,6 +101,8 @@ const Single = ({navigation, route, sellerInfo}) => {
   const itemCondition = allItemData.condition;
   const itemAuctionTimer = allItemData.auctionTimer;
   const itemAuctionPrice = allItemData.auctionPrice;
+
+  const [highestBid, setHighestBid] = useState(itemAuctionPrice);
 
   const fetchAvatar = async () => {
     try {
@@ -151,7 +160,7 @@ const Single = ({navigation, route, sellerInfo}) => {
     }
   };
 
-  useEffect(() => {
+  const countdownTimer = () => {
     // Countdown
     const auctionEndDate = allItemData.auctionTimer;
     const countdownEndDate = new Date(auctionEndDate);
@@ -169,6 +178,32 @@ const Single = ({navigation, route, sellerInfo}) => {
     const timeLeftSeconds = Math.floor(timeLeft / 1000);
     // Settign up the duration of countdown
     setTotalDuration(timeLeftSeconds);
+  };
+
+  const auctionEnding = async () => {
+    try {
+      const bid = await getCommentByFile(file_id);
+      const whatBid = bid.pop();
+      // setHighestBid(whatBid.comment);
+      const token = await AsyncStorage.getItem('userToken');
+      const tagAuctionSold = {
+        file_id: file_id,
+        tag: applicationTag + '_sold_' + whatBid.user_id,
+      };
+      const tagAuctionSoldResponse = await postTag(token, tagAuctionSold);
+
+      console.log(
+        'on auction end postTag',
+        tagAuctionSold,
+        'Auction sold tag',
+        tagAuctionSoldResponse
+      );
+    } catch (error) {
+      return console.error('onSubmit upload failed', error);
+    }
+  };
+
+  useEffect(() => {
     // Coundown timer for a given expiry date-time
     /*
     const date = moment().utcOffset('+05:30').format('YYYY-MM-DD hh:mm:ss');
@@ -191,9 +226,13 @@ const Single = ({navigation, route, sellerInfo}) => {
     */
 
     // Countdown
+    countdownTimer();
+    getHighestBid();
     fetchAvatar();
     fetchUserName();
     unlock();
+    auctionEnding();
+
     const orientSub = ScreenOrientation.addOrientationChangeListener((evt) => {
       console.log('Orientaatio', evt);
       if (evt.orientationInfo.orientation > 2) {
@@ -251,6 +290,9 @@ const Single = ({navigation, route, sellerInfo}) => {
           <Text>Auctionprice: {itemAuctionPrice}</Text>
         </ListItem>
         <ListItem>
+          <Text>Highest bid: {highestBid}</Text>
+        </ListItem>
+        <ListItem>
           <Text>Auction timer: {itemAuctionTimer}</Text>
         </ListItem>
         <CountDown
@@ -258,21 +300,37 @@ const Single = ({navigation, route, sellerInfo}) => {
           // duration of countdown in seconds
           timetoShow={('H', 'M', 'S')}
           // formate to show
-          onFinish={() => alert('finished')}
+          onFinish={() => alert('Auction has ended', auctionEnding)}
           // on Finish call
-          onPress={() => alert('hello')}
+          onPress={() => alert('hello', auctionEnding)}
           // on Press call
           size={20}
         />
+
         <Controller
           control={control}
-          render={({field: {onchange, onBlur, value}}) => (
+          rules={
+            {
+              // value: /[0-9]{1,128}/,
+              /*
+            validate: (value) => {
+              if (value > highestBid) {
+                return true;
+              } else {
+                return 'Your bid must be  higher';
+              }
+            },
+            */
+            }
+          }
+          render={({field: {onChange, onBlur, value}}) => (
             <Input
+              type="number"
               onBlur={onBlur}
-              onChangeText={onchange}
+              onChangeText={onChange}
               value={value}
               placeholder="Bid amount"
-            ></Input>
+            />
           )}
           name="comment"
         />
