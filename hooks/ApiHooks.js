@@ -208,7 +208,18 @@ const useComment = () => {
     }
   };
 
-  return {postBid};
+  const getCommentByFile = async (fileId) => {
+    const options = {
+      method: 'GET',
+    };
+    try {
+      return await doFetch(apiUrl + 'comments/file/' + fileId, options);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {postBid, getCommentByFile};
 };
 
 export {useMedia, useUser, useLogin, useTag, useComment};
