@@ -39,13 +39,14 @@ const ListItem = ({singleMedia, navigation, myFilesOnly}) => {
           <Text>{itemCategory}</Text>
         </ReListItem.Subtitle>
       </ReListItem.Content>
-
+    {!singleMedia.bid &&
       <Button
         title="Buy"
         onPress={() => {
           navigation.navigate('BuyItem', singleMedia);
         }}
       />
+    }
     </ReListItem>
   );
 };
