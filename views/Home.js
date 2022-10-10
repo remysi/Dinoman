@@ -23,6 +23,7 @@ const Home = (props) => {
   );
 };
 
+
 const styles = styleSheet.create({
   AndroidSafeArea: {
     flex: 1,
@@ -30,6 +31,7 @@ const styles = styleSheet.create({
     paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
 });
+
 
 Home.propTypes = {
   navigation: PropTypes.object,

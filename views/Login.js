@@ -17,7 +17,6 @@ const Login = ({navigation}) => {
   const checkToken = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
-      console.log('token', userToken);
       if (userToken != null) {
         const userData = await getUserByToken(userToken);
         setIsLoggedIn(true);
