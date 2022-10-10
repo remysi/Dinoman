@@ -7,7 +7,6 @@ import {Icon} from '@rneui/themed';
 
 import 'react-native-gesture-handler';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-
 import Home from '../views/Home';
 import Profile from '../views/Profile';
 import Login from '../views/Login';
@@ -24,7 +23,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
-        name='DrawerHome'
+        name='Home'
         component={TabNavigator}
       />
       <Drawer.Screen
@@ -36,7 +35,7 @@ const DrawerNavigator = () => {
 };
 
 
-// Hamburger navigator
+// Hamburger navigator with style
 /*const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
@@ -102,20 +101,32 @@ const DrawerNavigator = () => {
 };*/
 
 
+// Tab navigator with stacks
 const TabNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name='TabHome'
-        component={MainStackNavigator}
-        //options={{tabBarIcon: ({color}) => <Icon name="home" color={color} />}}
+        name='Home'
+        component={HomeStackNavigator}
+        options={{
+          tabBarIcon: ({color}) =>
+            <Icon
+              name="home"
+              color={color}
+            />,
+          headerShown: false
+        }}
       />
       <Tab.Screen
         name='Profile'
         component={ProfileStackNavigator}
-        /*        options={{
-                  tabBarIcon: ({color}) => <Icon name="account-circle" color={color} />,
-                }}*/
+      options={{
+        tabBarIcon: ({color}) =>
+          <Icon
+            name="account-circle"
+            color={color}
+          />,
+      }}
       />
     </Tab.Navigator>
   );
@@ -128,7 +139,7 @@ const MainStackNavigator = () => {
     <Stack.Navigator>
       <>
         <Stack.Screen
-          name='MainHome'
+          name='MainStackHome'
           component={Home}
           options={{headerShown: false}}
         />
@@ -143,9 +154,9 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="HomeHome"
+        name="HomeStackHome"
         component={Home}
-        //options={{headerShown: false}}
+        options={{headerShown: false}}
       />
       {/*<Stack.Screen name="ModifyProfile" component={ModifyProfile} />*/}
     </Stack.Navigator>
@@ -158,22 +169,26 @@ const ProfileStackNavigator = () => {
   const {isLoggedIn} = useContext(MainContext);
   return (
     <Stack.Navigator>
-      {/*{isLoggedIn ? (*/}
-      <>
-        <Stack.Screen
-          name='Back'
-          component={Profile}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen name='ModifyProfile' component={ModifyProfile} />
-      </>
-      {/*      ) : (
+      {isLoggedIn ? (
+        <>
+          <Stack.Screen
+            name='ProfileView'
+            component={Profile}
+            options={{headerShown: false}}
+          />
+
+          <Stack.Screen
+            name='ModifyProfile'
+            component={ModifyProfile}
+          />
+        </>
+      ) : (
         <Stack.Screen
           name='Login'
           component={Login}
           options={{headerShown: false}}
         />
-      )}*/}
+      )}
     </Stack.Navigator>
   );
 };

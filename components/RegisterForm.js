@@ -21,7 +21,6 @@ const RegisterForm = () => {
     try {
       const result = await postUser(userData);
       console.log('registration result', result);
-      // TODO: AUTOLOGIN (postLogin -> save token -> setLogged in)
     } catch (error) {
       console.error('RegisterForm  error', error);
     }
