@@ -14,7 +14,9 @@ const useMedia = (update, myFilesOnly = false) => {
       if (myFilesOnly) {
         json = json.filter((file) => file.user_id === user.user_id);
       }
+
       json.reverse();
+
       const allMediaData = json.map(async (mediaItem) => {
         return await doFetch(apiUrl + 'media/' + mediaItem.file_id);
       });
@@ -191,4 +193,35 @@ const useTag = () => {
   return {getFilesByTag, postTag};
 };
 
-export {useMedia, useUser, useLogin, useTag};
+const useComment = () => {
+  const postBid = async (token, biddedAmount) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+      body: JSON.stringify(biddedAmount),
+    };
+    try {
+      return await doFetch(apiUrl + 'comments', options);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  const getCommentByFile = async (fileId) => {
+    const options = {
+      method: 'GET',
+    };
+    try {
+      return await doFetch(apiUrl + 'comments/file/' + fileId, options);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {postBid, getCommentByFile};
+};
+
+export {useMedia, useUser, useLogin, useTag, useComment};

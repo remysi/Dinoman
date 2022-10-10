@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useContext} from 'react';
 import {Icon} from '@rneui/themed';
+import {Entypo} from '@expo/vector-icons';
 
 import 'react-native-gesture-handler';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -12,6 +13,12 @@ import Profile from '../views/Profile';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import ModifyProfile from '../views/ModifyProfile';
+import MainAuction from '../views/MainAuction';
+import Upload from '../views/Upload';
+import Single from '../views/Single';
+import SellerProfile from '../views/SellerProfile';
+import BidHistory from '../views/BidHistory';
+import BuyItem from '../views/BuyItem';
 
 
 const Drawer = createDrawerNavigator();
@@ -67,6 +74,7 @@ const DrawerNavigator = () => {
 
 // Tab navigator with stacks
 const TabNavigator = () => {
+  //const {isLoggedIn} = useContext(MainContext);
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -81,6 +89,21 @@ const TabNavigator = () => {
           headerShown: false
         }}
       />
+
+      <Tab.Screen
+        name="Main Auction"
+        component={MainAuction}
+        options={{
+          tabBarIcon: ({color}) =>
+            <Entypo
+              name="shop"
+              size={30}
+              color={color}
+            />,
+          headerTitleAlign: 'center',
+        }}
+      />
+
       <Tab.Screen
         name='Profile'
         component={ProfileStackNavigator}
@@ -119,10 +142,21 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="HomeStackHome"
+        name="Back"
         component={Home}
         options={{headerShown: false}}
       />
+
+      <Stack.Screen
+        name="Single"
+        component={Single}
+      />
+
+      <Stack.Screen
+        name="SellerProfile"
+        component={SellerProfile}
+      />
+
     </Stack.Navigator>
   );
 };
@@ -136,7 +170,7 @@ const ProfileStackNavigator = () => {
       {isLoggedIn ? (
         <>
           <Stack.Screen
-            name='ProfileView'
+            name='Back'
             component={Profile}
             options={{headerShown: false}}
           />
@@ -145,6 +179,12 @@ const ProfileStackNavigator = () => {
             name='ModifyProfile'
             component={ModifyProfile}
           />
+
+          <Stack.Screen
+            name="Upload"
+            component={Upload}
+          />
+
         </>
       ) : (
         <Stack.Screen
@@ -157,6 +197,36 @@ const ProfileStackNavigator = () => {
   );
 };
 
+
+// Main stack navigator
+const BidStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <>
+        <Stack.Screen
+          name="BidHistory"
+          component={BidHistory}
+        />
+
+        <Stack.Screen
+          name="BuyItem"
+          component={BuyItem}
+        />
+      </>
+    </Stack.Navigator>
+  );
+};
+
+
+/*
+const SingleScreen = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Single" component={Single} />
+    </Tab.Navigator>
+  );
+};
+*/
 
 const Navigator = () => {
   return (
