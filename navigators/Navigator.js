@@ -168,6 +168,7 @@ const TabNavigator = () => {
         headerShown: false
       }}
       />
+
     </Tab.Navigator>
   );
 };
