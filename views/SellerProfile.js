@@ -6,12 +6,12 @@ import {useTag, useUser} from '../hooks/ApiHooks';
 import {mediaUrl} from '../utils/variables';
 import {Avatar, Button, Card, Icon, ListItem, Text} from '@rneui/themed';
 import PropTypes from 'prop-types';
+import sellerInfo from '../views/Single';
 
 const Profile = ({navigation, route}) => {
-  console.log('Profile route', route.params);
-  console.log('Profile desc', description);
+  console.log('Profile route', route);
 
-  const {description, sellerInfo, user_id} = route.params;
+  const {user_id} = route.params.params;
 
   const {isLoggedIn, user} = useContext(MainContext);
   // const [avatar, setAvatar] = useState('https://placekitten.com/640');
@@ -21,9 +21,9 @@ const Profile = ({navigation, route}) => {
   const [username, setUserName] = useState(null);
   const {getUserById} = useUser();
 
-  console.log('SellerProfile info', sellerInfo);
+  console.log('SellerProfile info', user_id);
 
-  const stuff = route.params.user_id;
+  const stuff = sellerInfo;
   console.log('stuff', stuff);
 
   /*
@@ -43,8 +43,8 @@ const Profile = ({navigation, route}) => {
   const fetchUserName = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const usernameArray = await getUserById(token, route.params.user_id);
-      console.log('fetuser ded', route.params.user_id);
+      const usernameArray = await getUserById(token, user_id);
+      console.log('fetuser ded', user_id);
       // const userIdName = usernameArray.pop();
       setUserName(usernameArray.username);
       console.log(usernameArray.username);
