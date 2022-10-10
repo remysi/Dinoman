@@ -30,12 +30,7 @@ const TabScreen = () => {
         name="Dinoman"
         component={Home}
         options={{
-          tabBarIcon: ({color}) =>
-            <Icon
-              name="home"
-              size={30}
-              color={color}
-            />,
+          tabBarIcon: ({color}) => <Icon name="home" size={30} color={color} />,
           headerTitleAlign: 'center',
         }}
       />
@@ -43,12 +38,9 @@ const TabScreen = () => {
         name="Main Auction"
         component={MainAuction}
         options={{
-          tabBarIcon: ({color}) =>
-            <Entypo
-              name="shop"
-              size={30}
-              color={color}
-            />,
+          tabBarIcon: ({color}) => (
+            <Entypo name="shop" size={30} color={color} />
+          ),
           headerTitleAlign: 'center',
         }}
       />
@@ -58,11 +50,7 @@ const TabScreen = () => {
           component={Profile}
           options={{
             tabBarIcon: ({color}) => (
-              <Icon
-                name="account-circle"
-                size={30}
-                color={color}
-              />
+              <Icon name="account-circle" size={30} color={color} />
             ),
             headerTitleAlign: 'center',
           }}

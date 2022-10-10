@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useRef} from 'react';
 import {Alert} from 'react-native';
 
 import {useForm, Controller} from 'react-hook-form';
@@ -13,6 +13,8 @@ import {
   Input,
   ListItem,
   Text,
+  ExpiredNotice,
+  ShowCounter,
 } from '@rneui/themed';
 import {Video} from 'expo-av';
 import {ActivityIndicator, ScrollView} from 'react-native';
@@ -90,8 +92,9 @@ const Single = ({navigation, route, sellerInfo}) => {
 
   // Fix for countdown
 
-  // Countdown
-  const [totalDuration, setTotalDuration] = useState(0);
+  // Countdown FOR NEW COUNTDOWN USEREF
+  const ref = useRef(null);
+  const [totalDuration, setTotalDuration] = useState(10);
 
   const allItemData = JSON.parse(description);
   const itemAge = allItemData.age;
@@ -160,25 +163,101 @@ const Single = ({navigation, route, sellerInfo}) => {
     }
   };
 
-  const countdownTimer = () => {
+  const countdownTimer = async (e) => {
     // Countdown
-    const auctionEndDate = allItemData.auctionTimer;
-    const countdownEndDate = new Date(auctionEndDate);
+    const auctionEndDate =
+      (await allItemData.auctionTimer) || '2022-10-11 11:28:00';
 
+    const countdownEndDate = new Date(auctionEndDate);
+    // console.log('endDate', auctionEndDate);
+    // const timeNow setInterval
     const timestampEndDate = countdownEndDate.getTime();
-    console.log('End date timestamp', timestampEndDate);
+    // console.log('End date timestamp', timestampEndDate);
 
     const currentDate = new Date();
     const timestampCurrentDate = currentDate.getTime();
-    console.log('Current day timestamp', timestampCurrentDate);
+    // console.log('Current day timestamp', timestampCurrentDate);
 
     const timeLeft = timestampEndDate - timestampCurrentDate;
-    console.log('timeleft timestamp', timeLeft);
+    // console.log('timeleft timestamp', timeLeft);
 
-    const timeLeftSeconds = Math.floor(timeLeft / 1000);
+    // const timeLeftSeconds = Math.floor(timeLeft / 1000);
+    // console.log('temeleft', timeLeftSeconds);
     // Settign up the duration of countdown
-    setTotalDuration(timeLeftSeconds);
+    // setTotalDuration(timeLeftSeconds);
+    //  };
+
+    // New countdown timer
+
+    // const total = Date.parse(allItemData.auctionTimer) - Date.parse(new Date());
+    // const seconds = Math.floor((total / 1000) % 60);
+    // const minutes = Math.floor((total / 1000 / 60) % 60);
+    // const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+    const seconds = Math.floor((timeLeft / 1000) % 60);
+    const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+    const hours = Math.floor((timeLeft / 1000 / 60 / 60) % 24);
+    return {
+      timeLeft,
+      hours,
+      minutes,
+      seconds,
+    };
   };
+
+  const startTimer = (e) => {
+    const {total, hours, minutes, seconds} = countdownTimer(e);
+    if (total >= 0) {
+      // update the timer
+      // check if less than 10 then we need to
+      // add '0' at the beginning of the variable
+      setTotalDuration(
+        (hours > 9 ? hours : '0' + hours) +
+          ':' +
+          (minutes > 9 ? minutes : '0' + minutes) +
+          ':' +
+          (seconds > 9 ? seconds : '0' + seconds)
+      );
+    }
+  };
+
+  const clearTimer = (e) => {
+    // If you adjust it you should also need to
+    // adjust the Endtime formula we are about
+    // to code next
+    setTotalDuration('00:00:00:10');
+
+    // If you try to remove this line the
+    // updating of timer Variable will be
+    // after 1000ms or 1sec
+    if (ref.current) clearInterval(ref.current);
+    const id = setInterval(() => {
+      startTimer(e);
+    }, 1000);
+    ref.current = id;
+  };
+
+  const getDeadTime = () => {
+    const deadline = new Date();
+
+    // This is where you need to adjust if
+    // you entend to add more time
+    deadline.setSeconds(deadline.getSeconds() + 10);
+    return deadline;
+  };
+
+  // We can use useEffect so that when the component
+  // mount the timer will start as soon as possible
+
+  // We put empty array to act as componentDid
+  // mount only
+  useEffect(() => {
+    clearTimer(getDeadTime());
+  }, []);
+
+  // Another way to call the clearTimer() to start
+  // the countdown is via action event from the
+  // button first we create function to be called
+  // by the button
 
   const auctionEnding = async () => {
     try {
@@ -198,10 +277,62 @@ const Single = ({navigation, route, sellerInfo}) => {
         'Auction sold tag',
         tagAuctionSoldResponse
       );
+      Alert.alert('Auction has ended');
     } catch (error) {
-      return console.error('onSubmit upload failed', error);
+      return console.error('auctionEnding failed', error);
     }
   };
+
+  // NEW COUNTDOWN
+  /*
+  const useCountdown = (targetDate) => {
+    const countDownDate = new Date(targetDate).getTime();
+
+    const [countDown, setCountDown] = useState(
+      countDownDate - new Date().getTime()
+    );
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCountDown(countDownDate - new Date().getTime());
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }, [countDownDate]);
+
+    return getReturnValues(countDown);
+  };
+
+  const getReturnValues = (countDown) => {
+    // calculate time left
+    const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
+
+    return [days, hours, minutes, seconds];
+  };
+
+  const CountdownTimer = ({targetDate}) => {
+    const [days, hours, minutes, seconds] = useCountdown(targetDate);
+
+    if (days + hours + minutes + seconds <= 0) {
+      return <ExpiredNotice />;
+    } else {
+      return (
+        <ShowCounter
+          days={days}
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+        />
+      );
+    }
+  };
+*/
+  // NEW COUNTDOWN ENDS
 
   useEffect(() => {
     // Coundown timer for a given expiry date-time
@@ -226,12 +357,12 @@ const Single = ({navigation, route, sellerInfo}) => {
     */
 
     // Countdown
-    countdownTimer();
+    // countdownTimer();
     getHighestBid();
     fetchAvatar();
     fetchUserName();
     unlock();
-    auctionEnding();
+    // auctionEnding();
 
     const orientSub = ScreenOrientation.addOrientationChangeListener((evt) => {
       console.log('Orientaatio', evt);
@@ -245,7 +376,7 @@ const Single = ({navigation, route, sellerInfo}) => {
       lock();
       ScreenOrientation.removeOrientationChangeListener(orientSub);
     };
-  }, [videoRef]);
+  }, []);
 
   return (
     <ScrollView>
@@ -295,12 +426,14 @@ const Single = ({navigation, route, sellerInfo}) => {
         <ListItem>
           <Text>Auction timer: {itemAuctionTimer}</Text>
         </ListItem>
+        <Text>{totalDuration}</Text>
+
         <CountDown
           until={totalDuration}
           // duration of countdown in seconds
           timetoShow={('H', 'M', 'S')}
           // formate to show
-          onFinish={() => alert('Auction has ended', auctionEnding)}
+          onFinish={auctionEnding}
           // on Finish call
           onPress={() => alert('hello', auctionEnding)}
           // on Press call
@@ -334,6 +467,7 @@ const Single = ({navigation, route, sellerInfo}) => {
           )}
           name="comment"
         />
+        <Button title="End" onPress={auctionEnding} />
 
         <Button title="Bid" onPress={handleSubmit(bid)} />
         <ListItem>
