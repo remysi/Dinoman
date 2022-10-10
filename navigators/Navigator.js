@@ -47,22 +47,52 @@ const DrawerNavigator = () => {
           backgroundColor: '#FCF6B1'
         },
       }}>
+
       <Drawer.Screen
         name='Dinoman'
         component={TabNavigator}
         options={{
           drawerIcon: ({color}) => <Icon
             name="home"
+            size={25}
             color={'#33312E'}
           />
         }}
       />
+
+      <Drawer.Screen
+        name='Main Auction'
+        component={MainAuctionStackNavigator}
+        options={{
+          drawerIcon: ({color}) =>
+            <Entypo
+              name="shop"
+              size={25}
+              color={'#33312E'}
+            />
+        }}
+      />
+
+      <Drawer.Screen
+        name='Bid History'
+        component={BidStackNavigator}
+        options={{
+          drawerIcon: ({color}) =>
+            <Entypo
+              name="list"
+              size={25}
+              color={'#33312E'}
+            />
+        }}
+      />
+
       <Drawer.Screen
         name='Profile'
         component={ProfileStackNavigator}
         options={{
           drawerIcon: ({color}) => <Icon
             name="account-circle"
+            size={25}
             color={'#33312E'}
           />
         }}
@@ -76,7 +106,13 @@ const DrawerNavigator = () => {
 const TabNavigator = () => {
   //const {isLoggedIn} = useContext(MainContext);
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+    screenOptions={{
+      tabBarStyle: {
+        backgroundColor: '#FCF6B1',
+      },
+    }}>
+
       <Tab.Screen
         name='Home'
         component={HomeStackNavigator}
@@ -84,7 +120,8 @@ const TabNavigator = () => {
           tabBarIcon: ({color}) =>
             <Icon
               name="home"
-              color={color}
+              size={30}
+              color={'#33312E'}
             />,
           headerShown: false
         }}
@@ -92,13 +129,27 @@ const TabNavigator = () => {
 
       <Tab.Screen
         name="Main Auction"
-        component={MainAuction}
+        component={MainAuctionStackNavigator}
         options={{
           tabBarIcon: ({color}) =>
             <Entypo
               name="shop"
+              size={28}
+              color={'#33312E'}
+            />,
+          headerTitleAlign: 'center',
+        }}
+      />
+
+      <Tab.Screen
+        name="Bid History"
+        component={BidStackNavigator}
+        options={{
+          tabBarIcon: ({color}) =>
+            <Entypo
+              name="list"
               size={30}
-              color={color}
+              color={'#33312E'}
             />,
           headerTitleAlign: 'center',
         }}
@@ -111,28 +162,13 @@ const TabNavigator = () => {
         tabBarIcon: ({color}) =>
           <Icon
             name="account-circle"
-            color={color}
+            size={30}
+            color={'#33312E'}
           />,
         headerShown: false
       }}
       />
     </Tab.Navigator>
-  );
-};
-
-
-// Main stack navigator
-const MainStackNavigator = () => {
-  return (
-    <Stack.Navigator>
-      <>
-        <Stack.Screen
-          name='MainStackHome'
-          component={Home}
-          options={{headerShown: false}}
-        />
-      </>
-    </Stack.Navigator>
   );
 };
 
@@ -160,6 +196,33 @@ const HomeStackNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+
+// MainAuction stack navigator
+const MainAuctionStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Back"
+        component={MainAuction}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="Single"
+        component={Single}
+      />
+
+      <Stack.Screen
+        name="SellerProfile"
+        component={SellerProfile}
+      />
+
+    </Stack.Navigator>
+  );
+};
+
+
 
 
 // Profile stack navigator
