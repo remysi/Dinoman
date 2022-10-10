@@ -13,6 +13,7 @@ import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import ModifyProfile from '../views/ModifyProfile';
 
+
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -21,84 +22,47 @@ const Stack = createNativeStackNavigator();
 // Hamburger navigator
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen
-        name='Home'
-        component={TabNavigator}
-      />
-      <Drawer.Screen
-        name='Profile'
-        component={ProfileStackNavigator}
-      />
-    </Drawer.Navigator>
-  );
-};
-
-
-// Hamburger navigator with style
-/*const DrawerNavigator = () => {
-  return (
     <Drawer.Navigator
-      /!*initialRouteName='Home'
-      drawerPosition='left'
-      drawerType='slide'
-      edgeWith={100}
-      hideStatusBar={false}
-      overlayColor='#0000000'
-      drawerStyle={{
-        backgroundColor:'#e6e6e6',
-        width:250
-      }}
+      initialRouteName='Dinoman'
       screenOptions={{
         headerShown: true,
         swipeEnabled: false,
         headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: 'yellow',
-        },
-        headerTintColor: '#000000',
+        headerTintColor: '#33312E',
         headerTitleStyle: {
           fontSize: 20,
           fontWeight: 'bold',
         },
-      }}*!/
-    >
+        headerStyle: {
+          backgroundColor: '#FCF6B1',
+        },
+        drawerStyle: {
+          backgroundColor: '#FCF6B1'
+        },
+      }}>
       <Drawer.Screen
-        // name='Home'
+        name='Dinoman'
         component={TabNavigator}
-        /!*options={{
-          title:'Home view title',
+        options={{
           drawerIcon: ({color}) => <Icon
             name="home"
-            color={color}
+            color={'#33312E'}
           />
-        }}*!/
+        }}
       />
-      {/!*<Drawer.Screen
+      <Drawer.Screen
         name='Profile'
         component={ProfileStackNavigator}
         options={{
-          title:'Profile view title',
           drawerIcon: ({color}) => <Icon
             name="account-circle"
-            color={color}
+            color={'#33312E'}
           />
         }}
-      />*!/}
-{/!*      <Drawer.Screen
-        name='Login'
-        component={TabNavigator}
-        options={{
-          title:'Login view title',
-          drawerIcon: ({color}) => <Icon
-            name="login"
-            color={color}
-          />
-        }}
-      />*!/}
+      />
     </Drawer.Navigator>
   );
-};*/
+};
 
 
 // Tab navigator with stacks
@@ -126,6 +90,7 @@ const TabNavigator = () => {
             name="account-circle"
             color={color}
           />,
+        headerShown: false
       }}
       />
     </Tab.Navigator>
@@ -158,7 +123,6 @@ const HomeStackNavigator = () => {
         component={Home}
         options={{headerShown: false}}
       />
-      {/*<Stack.Screen name="ModifyProfile" component={ModifyProfile} />*/}
     </Stack.Navigator>
   );
 };
