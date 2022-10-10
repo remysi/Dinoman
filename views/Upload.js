@@ -35,7 +35,7 @@ const Upload = ({navigation}) => {
   // Date OnChange
   const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShowClock(Platform.OS === 'android');
+    setShowClock(false);
     setDate(currentDate);
 
     const tempDate = new Date(currentDate);
@@ -142,7 +142,7 @@ const Upload = ({navigation}) => {
           onPress: () => {
             resetForm();
             setUpdate(!update);
-            navigation.navigate('Home');
+            navigation.navigate('Dinoman');
           },
         },
       ]);
