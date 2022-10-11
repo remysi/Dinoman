@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 
 import List from '../components/BidList';
+import { MainContext } from '../contexts/MainContext';
 
 const BidHistory = ({navigation}) => {
   return (
