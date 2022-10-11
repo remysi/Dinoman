@@ -163,7 +163,7 @@ const Single = ({navigation, route, sellerInfo}) => {
     }
   };
 
-  const countdownTimer = async (e) => {
+  const countdownTimer = async () => {
     // Countdown
     const auctionEndDate =
       (await allItemData.auctionTimer) || '2022-10-11 11:28:00';
@@ -181,10 +181,10 @@ const Single = ({navigation, route, sellerInfo}) => {
     const timeLeft = timestampEndDate - timestampCurrentDate;
     // console.log('timeleft timestamp', timeLeft);
 
-    // const timeLeftSeconds = Math.floor(timeLeft / 1000);
+    const timeLeftSeconds = Math.floor(timeLeft / 1000);
     // console.log('temeleft', timeLeftSeconds);
     // Settign up the duration of countdown
-    // setTotalDuration(timeLeftSeconds);
+    setTotalDuration(timeLeftSeconds);
     //  };
 
     // New countdown timer
@@ -193,6 +193,7 @@ const Single = ({navigation, route, sellerInfo}) => {
     // const seconds = Math.floor((total / 1000) % 60);
     // const minutes = Math.floor((total / 1000 / 60) % 60);
     // const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+
     const seconds = Math.floor((timeLeft / 1000) % 60);
     const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
     const hours = Math.floor((timeLeft / 1000 / 60 / 60) % 24);
@@ -357,7 +358,7 @@ const Single = ({navigation, route, sellerInfo}) => {
     */
 
     // Countdown
-    // countdownTimer();
+    countdownTimer();
     getHighestBid();
     fetchAvatar();
     fetchUserName();

@@ -20,17 +20,15 @@ import SellerProfile from '../views/SellerProfile';
 import BidHistory from '../views/BidHistory';
 import BuyItem from '../views/BuyItem';
 
-
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 // Hamburger navigator
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName='Dinoman'
+      initialRouteName="Dinoman"
       screenOptions={{
         headerShown: true,
         swipeEnabled: false,
@@ -44,86 +42,72 @@ const DrawerNavigator = () => {
           backgroundColor: '#FCF6B1',
         },
         drawerStyle: {
-          backgroundColor: '#FCF6B1'
+          backgroundColor: '#FCF6B1',
         },
-      }}>
-
+      }}
+    >
       <Drawer.Screen
-        name='Dinoman'
+        name="Dinoman"
         component={TabNavigator}
         options={{
-          drawerIcon: ({color}) => <Icon
-            name="home"
-            size={25}
-            color={'#33312E'}
-          />
+          drawerIcon: ({color}) => (
+            <Icon name="home" size={25} color={'#33312E'} />
+          ),
         }}
       />
 
       <Drawer.Screen
-        name='Main Auction'
+        name="Main Auction"
         component={MainAuctionStackNavigator}
         options={{
-          drawerIcon: ({color}) =>
-            <Entypo
-              name="shop"
-              size={25}
-              color={'#33312E'}
-            />
+          drawerIcon: ({color}) => (
+            <Entypo name="shop" size={25} color={'#33312E'} />
+          ),
         }}
       />
 
       <Drawer.Screen
-        name='Bid History'
+        name="Bid History"
         component={BidStackNavigator}
         options={{
-          drawerIcon: ({color}) =>
-            <Entypo
-              name="list"
-              size={25}
-              color={'#33312E'}
-            />
+          drawerIcon: ({color}) => (
+            <Entypo name="list" size={25} color={'#33312E'} />
+          ),
         }}
       />
 
       <Drawer.Screen
-        name='Profile'
+        name="Profile"
         component={ProfileStackNavigator}
         options={{
-          drawerIcon: ({color}) => <Icon
-            name="account-circle"
-            size={25}
-            color={'#33312E'}
-          />
+          drawerIcon: ({color}) => (
+            <Icon name="account-circle" size={25} color={'#33312E'} />
+          ),
         }}
       />
     </Drawer.Navigator>
   );
 };
 
-
 // Tab navigator with stacks
 const TabNavigator = () => {
   //const {isLoggedIn} = useContext(MainContext);
   return (
     <Tab.Navigator
-    screenOptions={{
-      tabBarStyle: {
-        backgroundColor: '#FCF6B1',
-      },
-    }}>
-
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: '#FCF6B1',
+        },
+      }}
+    >
       <Tab.Screen
-        name='Home'
+        name="Home"
         component={HomeStackNavigator}
         options={{
-          tabBarIcon: ({color}) =>
-            <Icon
-              name="home"
-              size={30}
-              color={'#33312E'}
-            />,
-          headerShown: false
+          tabBarIcon: ({color}) => (
+            <Icon name="home" size={30} color={'#33312E'} />
+          ),
+          headerShown: false,
         }}
       />
 
@@ -131,12 +115,9 @@ const TabNavigator = () => {
         name="Main Auction"
         component={MainAuctionStackNavigator}
         options={{
-          tabBarIcon: ({color}) =>
-            <Entypo
-              name="shop"
-              size={28}
-              color={'#33312E'}
-            />,
+          tabBarIcon: ({color}) => (
+            <Entypo name="shop" size={28} color={'#33312E'} />
+          ),
           headerTitleAlign: 'center',
         }}
       />
@@ -145,34 +126,26 @@ const TabNavigator = () => {
         name="Bid History"
         component={BidStackNavigator}
         options={{
-          tabBarIcon: ({color}) =>
-            <Entypo
-              name="list"
-              size={30}
-              color={'#33312E'}
-            />,
+          tabBarIcon: ({color}) => (
+            <Entypo name="list" size={30} color={'#33312E'} />
+          ),
           headerTitleAlign: 'center',
         }}
       />
 
       <Tab.Screen
-        name='Profile'
+        name="Profile"
         component={ProfileStackNavigator}
-      options={{
-        tabBarIcon: ({color}) =>
-          <Icon
-            name="account-circle"
-            size={30}
-            color={'#33312E'}
-          />,
-        headerShown: false
-      }}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Icon name="account-circle" size={30} color={'#33312E'} />
+          ),
+          headerShown: false,
+        }}
       />
-
     </Tab.Navigator>
   );
 };
-
 
 // Home stack navigator
 const HomeStackNavigator = () => {
@@ -184,20 +157,12 @@ const HomeStackNavigator = () => {
         options={{headerShown: false}}
       />
 
-      <Stack.Screen
-        name="Single"
-        component={Single}
-      />
+      <Stack.Screen name="Single" component={Single} />
 
-      <Stack.Screen
-        name="SellerProfile"
-        component={SellerProfile}
-      />
-
+      <Stack.Screen name="SellerProfile" component={SellerProfile} />
     </Stack.Navigator>
   );
 };
-
 
 // MainAuction stack navigator
 const MainAuctionStackNavigator = () => {
@@ -209,22 +174,12 @@ const MainAuctionStackNavigator = () => {
         options={{headerShown: false}}
       />
 
-      <Stack.Screen
-        name="Single"
-        component={Single}
-      />
+      <Stack.Screen name="Single" component={Single} />
 
-      <Stack.Screen
-        name="SellerProfile"
-        component={SellerProfile}
-      />
-
+      <Stack.Screen name="SellerProfile" component={SellerProfile} />
     </Stack.Navigator>
   );
 };
-
-
-
 
 // Profile stack navigator
 const ProfileStackNavigator = () => {
@@ -234,25 +189,18 @@ const ProfileStackNavigator = () => {
       {isLoggedIn ? (
         <>
           <Stack.Screen
-            name='Back'
+            name="Back"
             component={Profile}
             options={{headerShown: false}}
           />
 
-          <Stack.Screen
-            name='ModifyProfile'
-            component={ModifyProfile}
-          />
+          <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
 
-          <Stack.Screen
-            name="Upload"
-            component={Upload}
-          />
-
+          <Stack.Screen name="Upload" component={Upload} />
         </>
       ) : (
         <Stack.Screen
-          name='Login'
+          name="Login"
           component={Login}
           options={{headerShown: false}}
         />
@@ -261,26 +209,18 @@ const ProfileStackNavigator = () => {
   );
 };
 
-
 // Main stack navigator
 const BidStackNavigator = () => {
   return (
     <Stack.Navigator>
       <>
-        <Stack.Screen
-          name="BidHistory"
-          component={BidHistory}
-        />
+        <Stack.Screen name="BidHistory" component={BidHistory} />
 
-        <Stack.Screen
-          name="BuyItem"
-          component={BuyItem}
-        />
+        <Stack.Screen name="BuyItem" component={BuyItem} />
       </>
     </Stack.Navigator>
   );
 };
-
 
 /*
 const SingleScreen = () => {
