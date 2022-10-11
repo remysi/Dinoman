@@ -6,52 +6,60 @@ import {useContext, useState, useEffect} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import { applicationTag } from '../utils/variables';
 
-const List = ({navigation, myFilesOnly}) => {
-  const {update} = useContext(MainContext);
-  const {mediaArray} = useMedia(update, myFilesOnly);
+const List = ({navigation, history}) => {
+  const {update, user} = useContext(MainContext);
+  const {mediaArray} = useMedia(update);
   const {getFilesByTag} = useTag();
   const [bidArray, setBidArray] = useState([]);
   
   
-  const fetchBids = async () => {
+  const fetchBids = async (history) => {
     try {
-      setBidArray( await getFilesByTag(applicationTag + 'bid'));
-      mediaArray.map((file)=>{
-        bidArray.map((bid)=>{
-            if (file.file_id === bid.file_id) {
-                file.bid = true;
-            } else {
-                file.bid = false;
-            }
-        });
-      });
+        if (history) {
+            setBidArray(await getFilesByTag(applicationTag + user.user_id));
+        } else {
+            const result = await getFilesByTag(applicationTag + 'bought');
+            const newArray = mediaArray.map((file)=>{
+                result.map((bid)=>{
+                    if (file.file_id === bid.file_id) {
+                        file.bid = true;
+                    } else {
+                        file.bid = false;
+                    }
+                });
+            });
+            setBidArray(newArray);
+        }
     } catch (error) {
       console.error('fethBids', error.message);
     }
   };
 
   useEffect(() => {
-    fetchBids();
+    fetchBids(history);
   }, [mediaArray]);
 
   return (
+    <>
+    {bidArray.lenght>0 &&
     <FlatList
-      data={mediaArray}
+      data={bidArray}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => (
         <ListItem
           singleMedia={item}
           navigation={navigation}
-          myFilesOnly={myFilesOnly}
         />
       )}
     />
+    }
+    </>
   );
 };
 
 List.propTypes = {
   navigation: PropTypes.object,
-  myFilesOnly: PropTypes.bool,
+  history: PropTypes.bool,
 };
 
 export default List;

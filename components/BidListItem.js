@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {mediaUrl} from '../utils/variables';
+import {applicationTag, mediaUrl} from '../utils/variables';
 import {
   ListItem as ReListItem,
   Avatar,
@@ -9,7 +9,7 @@ import {
 } from '@rneui/themed';
 import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
-import {useMedia} from '../hooks/ApiHooks';
+import {useMedia, useTag} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert} from 'react-native';
 
@@ -23,6 +23,22 @@ const ListItem = ({singleMedia, navigation, myFilesOnly}) => {
   const itemAge = allItemData.age;
   const itemCategory = allItemData.category;
   const itemCondition = allItemData.condition;
+
+  const {postTag} = useTag();
+
+const buyItem = async () => {
+  try {
+    const tag1 = {file_id: singleMedia.file_id, tag: applicationTag + 'bought'}
+    const token = await AsyncStorage.getItem('userToken');
+    const modifyResponse1 = await postTag(token, tag1);
+    const tag2 = {file_id: singleMedia.file_id, tag: applicationTag + user.user_id}
+    const modifyResponse2 = await postTag(token, tag2);
+    setUpdate(update+1);
+    Alert.alert("Payment", "Payment complite",[{ text: "OK", onPress: () => console.log("OK Pressed") }]);
+  } catch (error) {
+    console.error('addTag', error.message);
+  }
+};
 
   return (
     <ReListItem bottomDivider>
@@ -42,9 +58,7 @@ const ListItem = ({singleMedia, navigation, myFilesOnly}) => {
     {!singleMedia.bid &&
       <Button
         title="Buy"
-        onPress={() => {
-          navigation.navigate('BuyItem', singleMedia);
-        }}
+        onPress={buyItem}
       />
     }
     </ReListItem>
