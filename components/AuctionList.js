@@ -12,9 +12,10 @@ const AuctionList = ({navigation}) => {
 
   return (
     <FlatList
-      data={mediaArray}
+      data={mediaArray.slice(0,30)}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => (
+
         <AuctionItem
           singleMedia={item}
           navigation={navigation}
