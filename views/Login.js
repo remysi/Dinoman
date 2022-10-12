@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import {Button} from '@rneui/themed';
+import {Button, Card} from '@rneui/themed';
 
 const Login = ({navigation}) => {
   // props is needed for navigation
@@ -33,15 +33,17 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <View>
-      {showRegForm ? <RegisterForm /> : <LoginForm />}
-      <Button
-        title={showRegForm ? 'or sign in' : 'Register a new account'}
-        onPress={() => {
-          setShowRegForm(!showRegForm);
-        }}
-      ></Button>
-    </View>
+    <Card>
+      <View>
+        {showRegForm ? <RegisterForm /> : <LoginForm />}
+        <Button
+          title={showRegForm ? 'Back to sign in' : 'Register a new account'}
+          onPress={() => {
+            setShowRegForm(!showRegForm);
+          }}
+        ></Button>
+      </View>
+    </Card>
   );
 };
 

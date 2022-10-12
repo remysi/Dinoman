@@ -9,15 +9,16 @@ const Home = (props) => {
   const {navigation} = props;
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
+
       <ImageBackground
         source={require('../media/coffeeMaker.jpg')}
         style={styles.image}>
           <FeaturedAuctionList navigation={navigation} />
       </ImageBackground>
+
     </SafeAreaView>
   );
 };
-
 
 const styles = styleSheet.create({
   AndroidSafeArea: {

@@ -1,8 +1,11 @@
 import {useForm, Controller} from 'react-hook-form';
 import {useUser} from '../hooks/ApiHooks';
 import {Input, Button, Text, Card} from '@rneui/themed';
+import {Alert} from 'react-native';
+import PropTypes from 'prop-types';
+import Profile from '../views/Profile';
 
-const RegisterForm = () => {
+const RegisterForm = (navigation) => {
   const {checkUsername, postUser} = useUser();
   const {
     control,
@@ -21,6 +24,15 @@ const RegisterForm = () => {
     try {
       const result = await postUser(userData);
       console.log('registration result', result);
+
+      Alert.alert(result.message, '', [
+        {
+          text: 'Ok',
+          //  onPress: () => {
+          //    navigation.navigate('Dinoman');
+        },
+        //  },
+      ]);
     } catch (error) {
       console.error('RegisterForm  error', error);
     }
@@ -28,7 +40,7 @@ const RegisterForm = () => {
 
   return (
     <Card>
-      <Card.Title>Registeration Form</Card.Title>
+      <Card.Title>Registration</Card.Title>
       <Controller
         control={control}
         rules={{
@@ -153,4 +165,9 @@ const RegisterForm = () => {
   );
 };
 
+Profile.propTypes = {
+  navigation: PropTypes.object,
+};
+
 export default RegisterForm;
+// onPress={(handleSubmit(register), navigation.navigate('SellerProfile');
