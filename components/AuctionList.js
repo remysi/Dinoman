@@ -1,8 +1,6 @@
 import {FlatList} from 'react-native';
 import {useMedia} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
-import {useContext} from 'react';
-import {MainContext} from '../contexts/MainContext';
 import AuctionItem from './AuctionItem';
 
 const AuctionList = ({navigation}) => {
