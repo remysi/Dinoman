@@ -10,13 +10,16 @@ const Home = (props) => {
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
 
-      <Card>
-        <Card.Title h3>
+      <Card containerStyle={{backgroundColor: '#33312E', borderColor: '#FCF6B1'}}>
+        <Card.Title
+          h3
+          style={{color: '#FCF6B1',}}
+        >
           Newest Auctions
         </Card.Title>
       </Card>
 
-      <Card>
+      <Card containerStyle={{backgroundColor: '#33312E', borderColor: '#FCF6B1'}}>
         <FeaturedAuctionList navigation={navigation} />
       </Card>
     </SafeAreaView>
@@ -27,7 +30,7 @@ const Home = (props) => {
 const styles = styleSheet.create({
   AndroidSafeArea: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#8A8D91',
     paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
 });

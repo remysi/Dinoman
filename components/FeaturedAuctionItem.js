@@ -25,7 +25,9 @@ const FeaturedAuctionItem = ({singleMedia, navigation}) => {
   console.log('myArray: ' + itemArray);
 
   return (
-    <ListItem style={{flex: 1}}
+    <ListItem
+      style={{flex: 1}}
+      containerStyle={{backgroundColor: '#33312E'}}
       bottomDivider
       onPress={() => {
         navigation.navigate('Single', singleMedia);
@@ -39,20 +41,25 @@ const FeaturedAuctionItem = ({singleMedia, navigation}) => {
 
       <ListItem.Content>
 
-        <ListItem.Title numberOfLines={1} h4>
+        <ListItem.Title
+          numberOfLines={1} h4
+          style={{color: '#FCF6B1'}}>
           {singleMedia.title}
         </ListItem.Title>
 
-        <ListItem.Subtitle numberOfLines={30}>
+        <ListItem.Subtitle
+          style={{color: '#FCF6B1'}}
+          numberOfLines={10}>
           {itemObject.description}
         </ListItem.Subtitle>
 
         <ListItem.Subtitle
           numberOfLines={1}
           style={{
-            backgroundColor:'yellow',
-            borderRadius:15,
-            padding:5,
+            marginTop: 10,
+            backgroundColor: '#FCF6B1',
+            borderRadius: 15,
+            padding: 5,
           }}>
           {itemObject.auctionPrice + '€'}
         </ListItem.Subtitle>
@@ -60,7 +67,8 @@ const FeaturedAuctionItem = ({singleMedia, navigation}) => {
         <ListItem.Subtitle
           numberOfLines={2}
           style={{
-            backgroundColor:'yellow',
+            marginTop: 10,
+            backgroundColor: '#FCF6B1',
             borderRadius:15,
             padding:5,
           }}>
