@@ -213,8 +213,8 @@ const Single = ({navigation, route, sellerInfo}) => {
     const timeLeftSeconds = Math.floor(timeLeft / 1000);
     // console.log('temeleft', timeLeftSeconds);
     // Settign up the duration of countdown
-    setTotalDuration(timeLeftSeconds);
 
+    setTotalDuration(timeLeftSeconds);
     //  };
 
     // New countdown timer
