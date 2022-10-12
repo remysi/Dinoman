@@ -81,7 +81,7 @@ const styles = styleSheet.create({
 
   // Main containers.
   mainContainer: {
-    backgroundColor: '#33312E',
+    backgroundColor: 'rgba(51, 49, 46, 0)',
     paddingBottom: 20,
   },
   leftContainer: {

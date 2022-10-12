@@ -1,21 +1,11 @@
 import PropTypes from 'prop-types';
-//import {vh} from 'react-native-expo-viewport-units';
 import {mediaUrl} from '../utils/variables';
-import {
-  ListItem,
-  Avatar,
-  ButtonGroup,
-} from '@rneui/themed';
-import {useContext} from 'react';
-import {MainContext} from '../contexts/MainContext';
-import {useMedia} from '../hooks/ApiHooks';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
+import {ListItem, Avatar} from '@rneui/themed';
 
 const AuctionItem = ({singleMedia, navigation}) => {
 
   // näin otetaan user tiedot postauksesta
-  const {user} = useContext(MainContext);
+  // const {user} = useContext(MainContext);
 
   // singleMedia.description contains all auction item data
   // all the data is captured into itemArray and parsed into itemObject

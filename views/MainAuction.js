@@ -4,7 +4,7 @@ import AuctionList from '../components/AuctionList';
 import styleSheet from 'react-native-web/src/exports/StyleSheet';
 
 // Navigation in the home function if there is problems with nav
-const Home = (props) => {
+const MainAuction = (props) => {
   const {navigation} = props;
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
@@ -17,12 +17,12 @@ const styles = styleSheet.create({
   AndroidSafeArea: {
     flex: 1,
     backgroundColor: '#8A8D91',
-    paddingTop: Platform.OS === 'android' ? 30 : 0,
+    paddingTop: Platform.OS === 'android' ? 10 : 0,
   },
 });
 
-Home.propTypes = {
+MainAuction.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default Home;
+export default MainAuction;
