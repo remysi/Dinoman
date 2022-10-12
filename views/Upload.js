@@ -6,15 +6,12 @@ import {useState} from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
-import {Alert, Platform, ScrollView} from 'react-native';
+import {Alert, ScrollView} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import {useContext} from 'react';
 import {applicationTag} from '../utils/variables';
 import SelectDropdown from 'react-native-select-dropdown';
-// import RNDateTimePicker from '@react-native-community/datetimepicker';
-// import DateTimePicker from '@react-native-community/datetimepicker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-// import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 const Upload = ({navigation}) => {
   const [mediaFile, setMediaFile] = useState(null);
@@ -63,9 +60,6 @@ const Upload = ({navigation}) => {
     });
   };
 
-  // DateTimePickerAndroid.open(params: AndroidNativeProps)
-  // DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
-
   const {
     control,
     handleSubmit,
@@ -104,9 +98,7 @@ const Upload = ({navigation}) => {
       category: item.category,
       auctionTimer: item.auctionTimer,
       auctionPrice: data.startPrice,
-      // auctionDate: date.auctionDate,
     };
-    // formData.append('description', data.description);
     formData.append('description', JSON.stringify(allItemData));
     const filename = mediaFile.split('/').pop();
     let extension = filename.split('.').pop();
@@ -178,17 +170,7 @@ const Upload = ({navigation}) => {
     setShowClock(true);
     setMode(currentMode);
   };
-  /*
-  const hiddenClock = () => {
-    let hiddenClockValue;
-    if (!hiddenClockValue) {
-      !hiddenClockValue;
-      console.log(hiddenClockValue);
-    }
-  };
-  */
 
-  // setDate = (event, date) => {};
   console.log(item);
   return (
     <ScrollView>
@@ -319,7 +301,6 @@ const Upload = ({navigation}) => {
             defaultButtonText="Item condition"
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
-              // value = selectedItem;
               console.log(selectedItem);
               setItem((item) => {
                 return {...item, condition: selectedItem};
@@ -374,3 +355,17 @@ Upload.propTypes = {
 };
 
 export default Upload;
+
+/*
+   // DateTimePickerAndroid.open(params: AndroidNativeProps)
+  // DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
+  const hiddenClock = () => {
+    let hiddenClockValue;
+    if (!hiddenClockValue) {
+      !hiddenClockValue;
+      console.log(hiddenClockValue);
+    }
+  };
+  */
+
+// setDate = (event, date) => {};
