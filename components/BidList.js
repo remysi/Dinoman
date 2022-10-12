@@ -15,7 +15,7 @@ const List = ({navigation, history}) => {
   const fetchBids = async (history) => {
     try {
       if (history) {
-        setBidArray(await getFilesByTag(applicationTag + user.user_id));
+        setBidArray(await getFilesByTag(applicationTag + '_sold_' + user.user_id));
       } else {
         const result = await getFilesByTag(applicationTag + 'bought');
         const newArray = mediaArray.map((file) => {
