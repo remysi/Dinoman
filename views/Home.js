@@ -10,7 +10,7 @@ const Home = (props) => {
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
 
-      <Card containerStyle={{backgroundColor: '#33312E', borderColor: '#FCF6B1'}}>
+      <Card containerStyle={styles.title}>
         <Card.Title
           h3
           style={{color: '#FCF6B1',}}
@@ -19,7 +19,7 @@ const Home = (props) => {
         </Card.Title>
       </Card>
 
-      <Card containerStyle={{backgroundColor: '#33312E', borderColor: '#FCF6B1'}}>
+      <Card containerStyle={styles.list}>
         <FeaturedAuctionList navigation={navigation} />
       </Card>
     </SafeAreaView>
@@ -33,6 +33,16 @@ const styles = styleSheet.create({
     backgroundColor: '#8A8D91',
     paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
+  title: {
+    backgroundColor: '#33312E',
+    borderColor: '#FCF6B1',
+    borderRadius: 10,
+  },
+  list: {
+    backgroundColor: '#33312E',
+    borderColor: '#FCF6B1',
+    borderRadius: 10,
+    padding: 20,}
 });
 
 
