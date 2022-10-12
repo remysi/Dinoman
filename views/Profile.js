@@ -8,7 +8,9 @@ import PropTypes from 'prop-types';
 
 const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
-  const [avatar, setAvatar] = useState('https://placekitten.com/640');
+  const [avatar, setAvatar] = useState(
+    'https://users.metropolia.fi/~jannhakk/Web-pohjaiset-sovellukset/Dinoman/dinomanPropic.jpg'
+  );
   const {getFilesByTag} = useTag();
 
   const fetchAvatar = async () => {

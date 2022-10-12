@@ -162,7 +162,16 @@ const Upload = ({navigation}) => {
 
   const itemCondition = ['Perfect', 'Great', 'Good', 'Fair', 'Broken'];
 
-  const itemCategory = ['Clock', 'Weapon', 'Furniture', 'Art', 'Rome'];
+  const itemCategory = [
+    'Clock',
+    'Weapon',
+    'Furniture',
+    'Art',
+    'Rome',
+    'Other',
+    'Jewel',
+    'Coin',
+  ];
 
   // Show clock
   const showClockMode = (currentMode) => {
@@ -185,7 +194,11 @@ const Upload = ({navigation}) => {
     <ScrollView>
       <Card>
         <Card.Image
-          source={{uri: mediaFile || 'https://placekitten.com/300'}}
+          source={{
+            uri:
+              mediaFile ||
+              'https://users.metropolia.fi/~jannhakk/Web-pohjaiset-sovellukset/Dinoman/dinomanAucItem.jpg',
+          }}
         />
         <Controller
           control={control}
@@ -198,8 +211,7 @@ const Upload = ({navigation}) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Title"
-              autoCapitalize="words"
+              placeholder="Auction item name"
               errorMessage={
                 (errors.title?.type === 'required' && (
                   <Text>This is required.</Text>
@@ -214,36 +226,49 @@ const Upload = ({navigation}) => {
         />
         <Controller
           control={control}
+          rules={{
+            required: true,
+            minLength: 3,
+          }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Description"
+              placeholder="Full description"
             />
           )}
           name="description"
         />
         <Controller
           control={control}
+          rules={{
+            required: true,
+            minLength: 3,
+          }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Short Description"
+              placeholder="Shorter Description"
             />
           )}
           name="shortDescription"
         />
         <Controller
           control={control}
+          rules={{
+            required: true,
+            minLength: 1,
+          }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
+              keyboardType="numeric"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Age"
+              placeholder="Item age"
             />
           )}
           name="age"
@@ -251,23 +276,28 @@ const Upload = ({navigation}) => {
 
         <Controller
           control={control}
+          rules={{
+            required: true,
+            minLength: 3,
+          }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
+              keyboardType="numeric"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Starting Price"
+              placeholder="Auction start price"
             />
           )}
           name="startPrice"
         />
 
         <Button
-          title="Set Auction date"
+          title="Set auction end date"
           onPress={() => showClockMode('date')}
         />
         <Button
-          title="Set Auction time"
+          title="Set auction end time"
           onPress={() => showClockMode('time')}
         />
 
@@ -286,7 +316,7 @@ const Upload = ({navigation}) => {
         <>
           <SelectDropdown
             data={itemCondition}
-            defaultButtonText="Select condition"
+            defaultButtonText="Item condition"
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
               // value = selectedItem;
@@ -311,7 +341,7 @@ const Upload = ({navigation}) => {
 
         <SelectDropdown
           data={itemCategory}
-          defaultButtonText="Select category"
+          defaultButtonText="Item category"
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
             setItem((item) => {
@@ -326,10 +356,10 @@ const Upload = ({navigation}) => {
           }}
           name="category"
         />
-        <Button title="Select media" onPress={pickImage} />
-        <Button title="Reset" onPress={resetForm} />
+        <Button title="Select item picture" onPress={pickImage} />
+        <Button title="Reset form" onPress={resetForm} />
         <Button
-          title="Upload media"
+          title="Upload item to auction"
           disabled={!mediaFile}
           loading={isLoading}
           onPress={handleSubmit(onSubmit)}

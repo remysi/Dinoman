@@ -30,7 +30,7 @@ const LoginForm = () => {
 
   return (
     <Card>
-      <Card.Title>Login Form</Card.Title>
+      <Card.Title>Login</Card.Title>
       <Controller
         control={control}
         rules={{

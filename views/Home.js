@@ -9,11 +9,8 @@ const Home = (props) => {
   const {navigation} = props;
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
-
       <Card>
-        <Card.Title h3>
-          Newest Auctions
-        </Card.Title>
+        <Card.Title h3>Newest Auctions</Card.Title>
       </Card>
 
       <Card>
@@ -23,7 +20,6 @@ const Home = (props) => {
   );
 };
 
-
 const styles = styleSheet.create({
   AndroidSafeArea: {
     flex: 1,
@@ -31,7 +27,6 @@ const styles = styleSheet.create({
     paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
 });
-
 
 Home.propTypes = {
   navigation: PropTypes.object,

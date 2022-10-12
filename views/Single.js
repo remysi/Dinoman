@@ -31,12 +31,14 @@ const Single = ({navigation, route, sellerInfo}) => {
     route.params;
 
   const [videoRef, setVideoRef] = useState(null);
-  const [avatar, setAvatar] = useState('https://placekitten.com/160');
+  const [avatar, setAvatar] = useState(
+    'https://users.metropolia.fi/~jannhakk/Web-pohjaiset-sovellukset/Dinoman/dinomanPropic.jpg'
+  );
   const [username, setUserName] = useState(null);
   const {getFilesByTag, postTag} = useTag();
   const {getUserById} = useUser();
   // For bidding
-  // const {update, setUpdate} = useContext(MainContext);
+  const {update, setUpdate} = useContext(MainContext);
 
   const {postBid, getCommentByFile} = useComment();
   const {
@@ -50,24 +52,45 @@ const Single = ({navigation, route, sellerInfo}) => {
   });
 
   const bid = async (biddedAmount) => {
-    console.log('bidded amount', biddedAmount);
+    console.log(
+      'bidded comment amount',
+      biddedAmount.comment,
+      'what is highest bid',
+      highestBid
+    );
+    // parseInt(biddedAmount.comment) > parseInt(highestBid)
+    if (Number(biddedAmount.comment) > Number(highestBid)) {
+      console.log('Bid not high enough');
+      try {
+        console.log('bidded amount', biddedAmount);
+        const token = await AsyncStorage.getItem('userToken');
+        const bidResult = await postBid(token, biddedAmount);
+        console.log('bid successfull', bidResult);
 
-    try {
-      const token = await AsyncStorage.getItem('userToken');
-      const bidResult = await postBid(token, biddedAmount);
-      console.log('bid successfull', bidResult);
-      /*
-      Alert.alert(bidResult.message, '', [
-        {
-          text: 'Ok',
-          onPress: () => {
-            // setUpdate(!update);
+        Alert.alert('Bid successfull'.message, 'Bid successfull', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              setUpdate(!update);
+            },
           },
-        },
-      ]);
-      */
-    } catch (error) {
-      console.error('Biddingform  error', error);
+        ]);
+      } catch (error) {
+        console.error('Biddingform  error', error);
+      }
+    } else {
+      Alert.alert(
+        'Bid unsuccessfull'.message,
+        'Bid unsuccessfull. Your bid was too low',
+        [
+          {
+            text: 'Ok',
+            onPress: () => {
+              setUpdate(!update);
+            },
+          },
+        ]
+      );
     }
   };
 
@@ -76,6 +99,7 @@ const Single = ({navigation, route, sellerInfo}) => {
   // console.log('bidd?', oneBid);
 
   const getHighestBid = async () => {
+    console.log('total duration', totalDuration);
     try {
       const bid = await getCommentByFile(file_id);
       const whatBid = bid.pop();
@@ -94,12 +118,12 @@ const Single = ({navigation, route, sellerInfo}) => {
 
   // Countdown FOR NEW COUNTDOWN USEREF
   const ref = useRef(null);
-  const [totalDuration, setTotalDuration] = useState(10);
+  const [totalDuration, setTotalDuration] = useState(100);
 
   const allItemData = JSON.parse(description);
   const itemAge = allItemData.age;
   const itemDescription = allItemData.description;
-  const itemShortDescription = allItemData.shortDescription;
+  // const itemShortDescription = allItemData.shortDescription;
   const itemCategory = allItemData.category;
   const itemCondition = allItemData.condition;
   const itemAuctionTimer = allItemData.auctionTimer;
@@ -165,26 +189,32 @@ const Single = ({navigation, route, sellerInfo}) => {
 
   const countdownTimer = async () => {
     // Countdown
-    const auctionEndDate =
-      (await allItemData.auctionTimer) || '2022-10-11 11:28:00';
-
-    const countdownEndDate = new Date(auctionEndDate);
-    // console.log('endDate', auctionEndDate);
+    // const auctionEndDate = allItemData.auctionTimer;
+    // (await allItemData.auctionTimer) || '2022-10-11 11:28:00';
+    // console.log('auction timer', allItemData.auctionTimer);
+    // console.log('auction timer', auctionEndDate);
+    // const countdownEndDate = await auctionEndDate.getTime();
+    // const countdownEndDate = auctionEndDate.getTime();
+    // const countdownEndDate = new Date(auctionEndDate);
+    // console.log('endDate', countdownEndDate);
     // const timeNow setInterval
-    const timestampEndDate = countdownEndDate.getTime();
+    // const timestampEndDate = countdownEndDate.getTime();
+    // const timestampEndDate = auctionEndDate.getTime();
     // console.log('End date timestamp', timestampEndDate);
 
     const currentDate = new Date();
+    // console.log('current date', currentDate);
     const timestampCurrentDate = currentDate.getTime();
     // console.log('Current day timestamp', timestampCurrentDate);
-
-    const timeLeft = timestampEndDate - timestampCurrentDate;
+    const timeLeft = 1000000000000000 - timestampCurrentDate;
+    // const timeLeft = timestampEndDate - timestampCurrentDate;
     // console.log('timeleft timestamp', timeLeft);
 
     const timeLeftSeconds = Math.floor(timeLeft / 1000);
     // console.log('temeleft', timeLeftSeconds);
     // Settign up the duration of countdown
     setTotalDuration(timeLeftSeconds);
+
     //  };
 
     // New countdown timer
@@ -225,7 +255,7 @@ const Single = ({navigation, route, sellerInfo}) => {
     // If you adjust it you should also need to
     // adjust the Endtime formula we are about
     // to code next
-    setTotalDuration('00:00:00:10');
+    // setTotalDuration('00:00:00:10');
 
     // If you try to remove this line the
     // updating of timer Variable will be
@@ -363,6 +393,7 @@ const Single = ({navigation, route, sellerInfo}) => {
     fetchAvatar();
     fetchUserName();
     unlock();
+
     // auctionEnding();
 
     const orientSub = ScreenOrientation.addOrientationChangeListener((evt) => {
@@ -404,7 +435,7 @@ const Single = ({navigation, route, sellerInfo}) => {
         )}
         <Card.Divider />
         <ListItem>
-          <Text>Age: {itemAge}</Text>
+          <Text>Age: {itemAge} years</Text>
         </ListItem>
         <ListItem>
           <Text>Category: {itemCategory}</Text>
@@ -416,10 +447,7 @@ const Single = ({navigation, route, sellerInfo}) => {
           <Text>Description: {itemDescription}</Text>
         </ListItem>
         <ListItem>
-          <Text>Short Description: {itemShortDescription}</Text>
-        </ListItem>
-        <ListItem>
-          <Text>Auctionprice: {itemAuctionPrice}</Text>
+          <Text>Start price: {itemAuctionPrice}</Text>
         </ListItem>
         <ListItem>
           <Text>Highest bid: {highestBid}</Text>
@@ -428,7 +456,6 @@ const Single = ({navigation, route, sellerInfo}) => {
           <Text>Auction timer: {itemAuctionTimer}</Text>
         </ListItem>
         <Text>{totalDuration}</Text>
-
         <CountDown
           until={totalDuration}
           // duration of countdown in seconds
@@ -443,10 +470,9 @@ const Single = ({navigation, route, sellerInfo}) => {
 
         <Controller
           control={control}
-          rules={
-            {
-              // value: /[0-9]{1,128}/,
-              /*
+          rules={{
+            value: /[0-9]{1,128}/,
+            /*
             validate: (value) => {
               if (value > highestBid) {
                 return true;
@@ -455,10 +481,10 @@ const Single = ({navigation, route, sellerInfo}) => {
               }
             },
             */
-            }
-          }
+          }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
+              keyboardType="numeric"
               type="number"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -492,3 +518,17 @@ Single.propTypes = {
 };
 
 export default Single;
+
+/*
+<CountDown
+          until={totalDuration}
+          // duration of countdown in seconds
+          timetoShow={('H', 'M', 'S')}
+          // formate to show
+          onFinish={auctionEnding}
+          // on Finish call
+          onPress={() => alert('hello', auctionEnding)}
+          // on Press call
+          size={20}
+        />
+        */
