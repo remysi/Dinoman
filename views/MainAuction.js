@@ -16,7 +16,7 @@ const Home = (props) => {
 const styles = styleSheet.create({
   AndroidSafeArea: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#8A8D91',
     paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
 });
