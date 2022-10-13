@@ -19,13 +19,6 @@ You'll also see when the auctions are going to end and their highest bids.
 
 If you tap on any of the auctions you will be taken to the single view of that auction, where you can scroll through the information about the auction.
 
-![Home view](https://users.metropolia.fi/~remysi/projects/Dinoman/images/home.jpg
-)
-
-![Home view](https://users.metropolia.fi/~remysi/projects/Dinoman/images/hamburgerMenu.jpg
-)
-
----
 ---
 ---
 
@@ -41,7 +34,6 @@ Main Auction works basically the same as in Home view. You can scroll through al
 
 ---
 ---
----
 
 - **Single**
 
@@ -52,7 +44,6 @@ You can also place bids in Single view.
 ![Single](https://users.metropolia.fi/~remysi/projects/Dinoman/images/Single.jpg
 )
 
----
 ---
 ---
 
@@ -66,14 +57,17 @@ In SellerProfile you can see the information of the seller.
 
 ---
 ---
----
 
 
 - Login/Register
 
 In Login/Register view you can register as a new user and/or login as a user.
 
----
+![Login](https://users.metropolia.fi/~remysi/projects/Dinoman/images/login.jpg
+)
+![Register](https://users.metropolia.fi/~remysi/projects/Dinoman/images/registeration.jpg
+)
+
 ---
 ---
 
@@ -84,7 +78,10 @@ In Profile view you can see your own profile information or modify it.
 
 You can also logout, make a new auction or go to your bidding history through buttons.  
 
----
+
+![Profile](https://users.metropolia.fi/~remysi/projects/Dinoman/images/profile.jpg
+)
+
 ---
 ---
 
@@ -93,7 +90,9 @@ You can also logout, make a new auction or go to your bidding history through bu
 
 In ModifyProfile you can change your email address, full name or switch up your profile image.
 
----
+![Modify Profile](https://users.metropolia.fi/~remysi/projects/Dinoman/images/modifyProfile.jpg
+)
+
 ---
 ---
 
@@ -109,12 +108,11 @@ In Upload view you can:
     
 You can also reset the items form and of course upload the item to auction. 
 
-![Upload](https://users.metropolia.fi/~remysi/projects/Dinoman/images/Upload.jpg
+![Upload](https://users.metropolia.fi/~remysi/projects/Dinoman/images/upload.jpg
 )
-![Upload 2](https://users.metropolia.fi/~remysi/projects/Dinoman/images/Upload2.jpg
+![Upload 2](https://users.metropolia.fi/~remysi/projects/Dinoman/images/upload2.jpg
 )
 
----
 ---
 ---
 
@@ -124,10 +122,9 @@ You can also reset the items form and of course upload the item to auction.
 In BidHistory you can scroll through all of the bidded auctions which have ended. 
 You can click on the ended auctions and buy them if you won the auction.
 
-![Bid History](https://users.metropolia.fi/~remysi/projects/Dinoman/images/BidHistory.jpg
+![Bid History](https://users.metropolia.fi/~remysi/projects/Dinoman/images/bidHistory.jpg
 )
 
----
 ---
 ---
 
@@ -141,12 +138,12 @@ Simulates the buying procedure when you have clicked on the won bid in bid histo
 
 ---
 ---
----
-
 ## 🔗 Links
 **Contributors:**
 
 [![Remy Silanto](https://github.com/remysi)
+
 [![Janne Hakkarainen](https://github.com/jannhakk)
+
 [![Juuso Hyvönen](https://github.com/Juuso300)
 
