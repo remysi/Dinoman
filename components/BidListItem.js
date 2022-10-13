@@ -26,19 +26,27 @@ const ListItem = ({singleMedia, navigation, myFilesOnly}) => {
 
   const {postTag} = useTag();
 
-const buyItem = async () => {
-  try {
-    const tag1 = {file_id: singleMedia.file_id, tag: applicationTag + 'bought'}
-    const token = await AsyncStorage.getItem('userToken');
-    const modifyResponse1 = await postTag(token, tag1);
-    const tag2 = {file_id: singleMedia.file_id, tag: applicationTag + user.user_id}
-    const modifyResponse2 = await postTag(token, tag2);
-    setUpdate(update+1);
-    Alert.alert("Payment", "Payment complite",[{ text: "OK", onPress: () => console.log("OK Pressed") }]);
-  } catch (error) {
-    console.error('addTag', error.message);
-  }
-};
+  const buyItem = async () => {
+    try {
+      const tag1 = {
+        file_id: singleMedia.file_id,
+        tag: applicationTag + 'bought',
+      };
+      const token = await AsyncStorage.getItem('userToken');
+      const modifyResponse1 = await postTag(token, tag1);
+      const tag2 = {
+        file_id: singleMedia.file_id,
+        tag: applicationTag + user.user_id,
+      };
+      const modifyResponse2 = await postTag(token, tag2);
+      setUpdate(update + 1);
+      Alert.alert('Payment', 'Payment complete', [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    } catch (error) {
+      console.error('addTag', error.message);
+    }
+  };
 
   return (
     <ReListItem bottomDivider>
@@ -55,12 +63,7 @@ const buyItem = async () => {
           <Text>{itemCategory}</Text>
         </ReListItem.Subtitle>
       </ReListItem.Content>
-    {!singleMedia.bid &&
-      <Button
-        title="Buy"
-        onPress={buyItem}
-      />
-    }
+      {!singleMedia.bid && <Button title="Buy" onPress={buyItem} />}
     </ReListItem>
   );
 };

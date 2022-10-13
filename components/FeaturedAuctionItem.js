@@ -1,20 +1,16 @@
+/* eslint-disable camelcase */
 import PropTypes from 'prop-types';
 //import {vh} from 'react-native-expo-viewport-units';
 import {mediaUrl} from '../utils/variables';
-import {
-  ListItem,
-  Avatar,
-  ButtonGroup, Card,
-} from '@rneui/themed';
-import {useContext} from 'react';
+import {ListItem, Avatar, ButtonGroup, Card} from '@rneui/themed';
+import {useContext, useEffect, useState} from 'react';
 import {MainContext} from '../contexts/MainContext';
-import {useMedia} from '../hooks/ApiHooks';
+import {useMedia, useComment} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert, Platform, View} from 'react-native';
 import styleSheet from 'react-native-web/src/exports/StyleSheet';
 
-const FeaturedAuctionItem = ({singleMedia, navigation}) => {
-
+const FeaturedAuctionItem = ({singleMedia, navigation, route}) => {
   // Captures the information from the poster
   const {user} = useContext(MainContext);
 
@@ -34,42 +30,29 @@ const FeaturedAuctionItem = ({singleMedia, navigation}) => {
         navigation.navigate('Single', singleMedia);
       }}
     >
-
       <View style={styles.leftContainer}>
-
         <Avatar
-          size='large'
+          size="large"
           source={{uri: mediaUrl + singleMedia.thumbnails.w160}}
         />
 
-        <ListItem.Subtitle
-          numberOfLines={1}
-          style={styles.auctionPrice}
-        >
+        <ListItem.Subtitle numberOfLines={1} style={styles.auctionPrice}>
           {itemObject.auctionPrice + '€'}
         </ListItem.Subtitle>
       </View>
 
       <ListItem.Content style={styles.rightContainer}>
-
-        <ListItem.Title
-          numberOfLines={1} h4
-          style={{color: '#FCF6B1'}}>
+        <ListItem.Title numberOfLines={1} h4 style={{color: '#FCF6B1'}}>
           {singleMedia.title}
         </ListItem.Title>
 
-        <ListItem.Subtitle
-          style={{color: '#FCF6B1'}}
-          numberOfLines={7}>
+        <ListItem.Subtitle style={{color: '#FCF6B1'}} numberOfLines={7}>
           {itemObject.description}
         </ListItem.Subtitle>
 
-        <ListItem.Subtitle
-          numberOfLines={2}
-          style={styles.auctionTimer}>
+        <ListItem.Subtitle numberOfLines={2} style={styles.auctionTimer}>
           {'Auction ends: ' + itemObject.auctionTimer}
         </ListItem.Subtitle>
-
       </ListItem.Content>
 
       <ListItem.Chevron />
@@ -78,7 +61,6 @@ const FeaturedAuctionItem = ({singleMedia, navigation}) => {
 };
 
 const styles = styleSheet.create({
-
   // Main containers.
   mainContainer: {
     backgroundColor: 'rgba(51, 49, 46, 0)',
@@ -106,12 +88,13 @@ const styles = styleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     backgroundColor: '#FCF6B1',
-    borderRadius:15,
-    padding:5,
+    borderRadius: 15,
+    padding: 5,
   },
 });
 
 FeaturedAuctionItem.propTypes = {
+  route: PropTypes.object,
   singleMedia: PropTypes.object,
   navigation: PropTypes.object,
 };
