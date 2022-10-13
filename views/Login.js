@@ -37,6 +37,7 @@ const Login = ({navigation}) => {
       <View>
         {showRegForm ? <RegisterForm /> : <LoginForm />}
         <Button
+          color={'#33312E'}
           title={showRegForm ? 'Back to sign in' : 'Register a new account'}
           onPress={() => {
             setShowRegForm(!showRegForm);

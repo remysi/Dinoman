@@ -5,6 +5,7 @@ import {useTag} from '../hooks/ApiHooks';
 import {mediaUrl} from '../utils/variables';
 import {Avatar, Button, Card, Icon, ListItem, Text} from '@rneui/themed';
 import PropTypes from 'prop-types';
+import { StyleSheet } from 'react-native-web';
 
 const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
@@ -40,37 +41,40 @@ const Profile = ({navigation}) => {
   };
 
   return (
-    <Card>
+    <Card containerStyle={styles.Card}>
       <Card.Title>Full name: {user.full_name}</Card.Title>
       <Card.Image source={{uri: avatar}} />
-      <ListItem>
+      <ListItem style={styles.List}>
         <Avatar
           icon={{name: 'contact-mail', type: 'material'}}
           containerStyle={{backgroundColor: 'darkred'}}
         />
         <Text> {user.email}</Text>
       </ListItem>
-      <ListItem>
+      <ListItem containerstyle={styles.List}>
         <Icon name="person" />
         <Text>
           User: {user.username} (id: {user.user_id})
         </Text>
       </ListItem>
-      <Button title="Logout" onPress={logOut} />
+      <Button color={'#33312E'} title="Logout" onPress={logOut} />
 
       <Button
+        color={'#33312E'}
         title="Update"
         onPress={() => {
           navigation.navigate('ModifyProfile', user);
         }}
       />
       <Button
+        color={'#33312E'}
         title="Add item to auction"
         onPress={() => {
           navigation.navigate('Upload', user);
         }}
       />
       <Button
+        color={'#33312E'}
         title="Bid History"
         onPress={() => {
           navigation.navigate('BidHistory', user);
@@ -79,6 +83,14 @@ const Profile = ({navigation}) => {
     </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  Card: {
+    flex: 1,
+    //backgroundColor: '#8A8D91',
+    paddingTop: Platform.OS === 'android' ? 5 : 0,
+  },
+});
 
 Profile.propTypes = {
   navigation: PropTypes.object,
