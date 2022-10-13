@@ -76,7 +76,7 @@ const LoginForm = () => {
         name="password"
       />
 
-      <Button title="Sign in!" onPress={handleSubmit((data) => logIn(data))} />
+      <Button color={'#33312E'} title="Sign in!" onPress={handleSubmit((data) => logIn(data))} />
     </Card>
   );
 };

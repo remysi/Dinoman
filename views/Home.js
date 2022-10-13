@@ -24,7 +24,6 @@ const styles = styleSheet.create({
   AndroidSafeArea: {
     flex: 1,
     backgroundColor: '#8A8D91',
-    //backgroundImage: './media/coffeeMaker.jpg',
     paddingTop: Platform.OS === 'android' ? 5 : 0,
   },
   image: {

@@ -160,7 +160,7 @@ const RegisterForm = (navigation) => {
         )}
         name="full_name"
       />
-      <Button title="Register" onPress={handleSubmit(register)} />
+      <Button color={'#33312E'} title="Register" onPress={handleSubmit(register)} />
     </Card>
   );
 };

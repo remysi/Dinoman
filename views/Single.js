@@ -334,10 +334,11 @@ const Single = ({navigation, route, sellerInfo}) => {
           name="comment"
         />
 
-        <Button title="Bid" onPress={handleSubmit(bid)} />
+        <Button color={'#33312E'} title="Bid" onPress={handleSubmit(bid)} />
         <ListItem>
           <Avatar source={{uri: avatar}} />
           <Button
+            color={'#33312E'}
             title={username}
             onPress={() => {
               navigation.navigate('SellerProfile', route, username, sellerInfo);
