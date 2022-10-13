@@ -63,7 +63,7 @@ const ListItem = ({singleMedia, navigation, myFilesOnly}) => {
           <Text>{itemCategory}</Text>
         </ReListItem.Subtitle>
       </ReListItem.Content>
-      {!singleMedia.bid && <Button title="Buy" onPress={buyItem} />}
+      {!singleMedia.bid && <Button color={'#33312E'} title="Buy" onPress={buyItem} />}
     </ReListItem>
   );
 };
