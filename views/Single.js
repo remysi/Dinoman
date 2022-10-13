@@ -159,19 +159,19 @@ const Single = ({navigation, route, sellerInfo}) => {
     const auctionEndDate = allItemData.auctionTimer;
     const fixedAuctionEndDate = auctionEndDate.split(' ').join('T') + '.000Z';
 
-    console.log('auction timer', auctionEndDate, 'fixed', fixedAuctionEndDate);
+    // console.log('auction timer', auctionEndDate, 'fixed', fixedAuctionEndDate);
 
     const countdownEndDate = new Date(fixedAuctionEndDate);
 
-    console.log('endDate', countdownEndDate);
+    // console.log('endDate', countdownEndDate);
 
     const currentDate = new Date();
-    console.log('current date', currentDate);
+    // console.log('current date', currentDate);
     const timestampCurrentDate = currentDate.getTime();
 
     const timeLeft = countdownEndDate - timestampCurrentDate;
 
-    const timeLeftSeconds = Math.floor(timeLeft / 1000);
+    const timeLeftSeconds = Math.floor(timeLeft / 1000 - 10800);
 
     setTotalDuration(timeLeftSeconds);
 
@@ -236,6 +236,7 @@ const Single = ({navigation, route, sellerInfo}) => {
         'Auction sold tag',
         tagAuctionSoldResponse
       );
+
       Alert.alert('Auction has ended');
     } catch (error) {
       return console.error('auctionEnding failed', error);

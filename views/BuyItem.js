@@ -1,16 +1,15 @@
-import { Card, ListItem, Text } from '@rneui/base';
+import {Card, ListItem, Text} from '@rneui/base';
 import PropTypes from 'prop-types';
-import { useTag } from '../hooks/ApiHooks';
+import {useTag} from '../hooks/ApiHooks';
 
 const BuyItem = ({navigation}) => {
   return (
     <Card>
       <Card.Title>Payment</Card.Title>
       <ListItem>
-        <Text> Payment complite</Text>
+        <Text> Payment complete</Text>
       </ListItem>
     </Card>
-    
   );
 };
 

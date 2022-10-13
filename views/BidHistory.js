@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
-import {StyleSheet, View, Platform} from 'react-native';
+import {useContext} from 'react';
+import {StyleSheet, View, Platform, SafeAreaView} from 'react-native';
 
-import List from '../components/BidList';
-import { MainContext } from '../contexts/MainContext';
+import BidList from '../components/BidList';
+import {MainContext} from '../contexts/MainContext';
 
 const BidHistory = ({navigation}) => {
   return (
-    <View style={styles.droidSafeArea}>
-      <List navigation={navigation} />
-    </View>
+    <SafeAreaView style={styles.droidSafeArea}>
+      <BidList navigation={navigation} />
+    </SafeAreaView>
   );
 };
 

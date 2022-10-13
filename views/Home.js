@@ -3,19 +3,20 @@ import {Image, ImageBackground, Platform, SafeAreaView} from 'react-native';
 import FeaturedAuctionList from '../components/FeaturedAuctionList';
 import styleSheet from 'react-native-web/src/exports/StyleSheet';
 import {Card} from '@rneui/themed';
+import {useState, useEffect} from 'react';
 
 // Navigation in the home function if there is problems with nav
 const Home = (props) => {
   const {navigation} = props;
+
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
-
       <ImageBackground
         source={require('../media/coffeeMaker.jpg')}
-        style={styles.image}>
-          <FeaturedAuctionList navigation={navigation} />
+        style={styles.image}
+      >
+        <FeaturedAuctionList navigation={navigation} />
       </ImageBackground>
-
     </SafeAreaView>
   );
 };

@@ -5,12 +5,14 @@ import {apiUrl, applicationTag} from '../utils/variables';
 
 const useMedia = (update, myFilesOnly = false) => {
   const [mediaArray, setMediaArray] = useState([]);
+  const [mediaBoughtArray, setMediaBoughtArray] = useState([]);
+
   const {user} = useContext(MainContext);
   const loadMedia = async () => {
     try {
       let json = await doFetch(apiUrl + 'tags/' + applicationTag);
       console.log(json);
-
+      // json = json.filter(await doFetch(apiUrl + 'tags/' + applicationTag + '_sold_'));
       if (myFilesOnly) {
         json = json.filter((file) => file.user_id === user.user_id);
       }
@@ -26,8 +28,31 @@ const useMedia = (update, myFilesOnly = false) => {
     }
   };
 
+  const loadBoughtMedia = async () => {
+    try {
+      let json = await doFetch(
+        apiUrl + 'tags/' + applicationTag + '_sold_' + user.user_id
+      );
+      console.log(json);
+
+      if (myFilesOnly) {
+        json = json.filter((file) => file.user_id === user.user_id);
+      }
+
+      json.reverse();
+
+      const allMediaData = json.map(async (mediaItem) => {
+        return await doFetch(apiUrl + 'media/' + mediaItem.file_id);
+      });
+      setMediaBoughtArray(await Promise.all(allMediaData));
+    } catch (error) {
+      console.log('media fetch failed', error);
+    }
+  };
+
   useEffect(() => {
     loadMedia();
+    loadBoughtMedia();
   }, [update]);
 
   const postMedia = async (token, data) => {
@@ -71,7 +96,7 @@ const useMedia = (update, myFilesOnly = false) => {
     }
   };
 
-  return {mediaArray, postMedia, putMedia, deleteMedia};
+  return {mediaArray, mediaBoughtArray, postMedia, putMedia, deleteMedia};
 };
 
 const useLogin = () => {
@@ -148,8 +173,6 @@ const useUser = () => {
 
   // eslint-disable-next-line camelcase
   const getUserById = async (token, user_id) => {
-    //  const token1 =
-    //    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMTM2LCJ1c2VybmFtZSI6Ikphbm5lIiwiZW1haWwiOiJqYW5uaGFra0BtZXRyb3BvbGlhLmZpIiwiZnVsbF9uYW1lIjoiSmFubmUgSGFra2FyYWluZW4iLCJpc19hZG1pbiI6bnVsbCwidGltZV9jcmVhdGVkIjoiMjAyMi0wOC0yNFQwOTozNzowMy4wMDBaIiwiaWF0IjoxNjYzNjc3NDgxLCJleHAiOjE2NjM3NjM4ODF9.6vEWokeoHx4vUH8lwe62BWXCCK9TQRjAxrjmCP6r-aY';
     try {
       const options = {
         method: 'GET',
